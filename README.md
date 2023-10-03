@@ -9,6 +9,7 @@ The aim of this project is to create a system for automation of appliances in a 
 
 ## Requirement
 
+Here we will be using a PIR sensor.A passive infrared sensor (PIR sensor) is an electronic sensor that measures infrared (IR) light radiating from objects in its field of view. They are most often used in PIR-based motion detectors. This will detect the presence of any indiviuals in the vicinity. If yes our board is programmed to turn on the light(s) in a defined space. If not it will turn OFF automatically.
 
 ## Block Diagram
 
