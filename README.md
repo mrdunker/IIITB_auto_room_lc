@@ -12,7 +12,10 @@ The aim of this project is to create a system for automation of appliances in a 
 
 ## Block Diagram
 
-## Assumed cicuit 
+![Screenshot from 2023-10-03 15-52-44](https://github.com/mrdunker/IIITB_home_aa_proximity/assets/38190245/9f036715-d67c-418d-8562-61e11c699338)
+
+
+## Assumed circuit 
 
 ## Testing the code
 
