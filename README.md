@@ -466,3 +466,50 @@ Disassembly of section .text:
    105e4:	00008067          	ret
 
 ```
+
+<br />
+The above assembly code was run on a python script to find the different instructions used:
+<br />
+
+```
+Number of different instructions: 37
+List of unique instructions:
+blez
+lui
+srai
+sw
+jr
+add
+addi
+sllw
+blt
+mv
+bltu
+jal
+beq
+and
+or
+sext.w
+slli
+negw
+ret
+ecall
+bgeu
+sd
+sb
+sub
+addiw
+bnez
+j
+auipc
+bltz
+lbu
+li
+ld
+jalr
+andi
+beqz
+lw
+bne
+
+```
