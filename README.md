@@ -67,7 +67,7 @@ void readpindetails() {
 	"or x30, x30, %0\n\t" 
 	:"=r"(led_pin_reg));
     asm(
-	"andi %0, x30, 0\n\t"
+	"andi %0, x30, 1\n\t"
 	:"=r"(sensor_pin));
 	
     while (1) {
