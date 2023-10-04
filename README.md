@@ -1,11 +1,11 @@
-## IIITB_RISCV_Home_Appliance_Automation_with_proximity_sensor
+## IIITB_RISCV_Automated_Room_Lighting_control
 
 This Repository summarizes the work progress made in The RISC-V based project.
 
 
 ## Motive
 
-The aim of this project is to create a system for automation of appliances in a home or room based on the proximity of the user. Most rooms are not equiped to automatically turn ON and OFF basic appliances like lights and fans when people enter and exit rooms respectively.This saves a lot of net electricity and helps imporve cost efficeny and power saving. Idea is not to make a home or room fully automated as of now but just to automate basic appliances.
+The aim of this project is to create a system for automation of appliances in a home or room based on the proximity of the user. Most rooms are not equipped to automatically turn ON and OFF basic appliances like lights and fans when people enter and exit rooms respectively.This saves a lot of net electricity and helps imporve cost efficeny and power saving. The idea is not to make a home or room fully automated as of now but just to automate basic appliances.
 
 ## Requirement
 
@@ -525,5 +525,17 @@ mv
 lui
 sw
 
-
 ```
+
+## Acknowledgement
+
+1. Kunal Ghosh, VSD Corp. Pvt. Ltd.
+2. Sumanto Kar,VSD Corp.
+3. Mayank Kabra, IIIT-Bangalore
+4. Alwin Shaju,Colleague,IIIT-Bangalore
+
+## References
+
+1. https://github.com/SakethGajawada/RISCV-GNU
+2. https://github.com/kunalg123
+
