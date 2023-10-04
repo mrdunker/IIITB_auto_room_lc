@@ -17,6 +17,11 @@ Here we will be using a PIR sensor. A passive infrared sensor (PIR sensor) is an
 
 ## Assumed circuit 
 
+The below shown is an assumed circuit(not entirely accurate).<br />
+![Screenshot from 2023-10-04 22-00-41](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/a8f97e11-ff3e-45ed-ba8c-8e7785635908)
+
+
+
 ## Testing the code
 
 1. Open a terminal window
