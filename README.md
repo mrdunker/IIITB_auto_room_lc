@@ -41,35 +41,52 @@ When input from sensor is LOW:<br />
 ## C code for the design
 
 ```
-#include <stdio.h>
-//#include <unistd.h>
+
 void delaytime(int);
+void readpindetails();
+
+int main()
+{   
+
+    readpindetails();
+    return 0;
+        
+}
 void readpindetails() {
 
-    int led_pin,sensor_pin;
+    int led_pin,sensor_pin,led_pin_reg;
 
-    // Turn off the room light initially
-    led_pin =0;
-    sensor_pin =1;  //should replace it with pin input
-
+    led_pin_reg = led_pin*2;
     //printf("Motion sensor-based room light control started.\n");
-
+    asm(
+	"or x30, x30, %0\n\t" 
+	:"=r"(led_pin_reg));
+    asm(
+	"andi %0, x30, 0\n\t"
+	:"=r"(sensor_pin));
+	
     while (1) {
 
-        //if (motionState == HIGH) {
         if (sensor_pin == 1) {
             // Motion detected, turn on the room light
             //digitalWrite(LIGHT_PIN, HIGH);
-            //led_pin = 1;
-            //printf("Motion detected. Light turned ON.\n");
-            //sleep(3); //delay of 10 seconds for it to stay on if a motion is detected
+            printf("Motion detected. Light turned ON.\n");
+            led_pin = 1;
+            led_pin_reg = led_pin*2;
+            asm(
+		"or x30, x30, %0\n\t" 
+		:"=r"(led_pin_reg));
             delaytime(3000);// Almost 6 second delay is given
             // You can add a delay here to control how long the light stays on
         } else {
             // No motion detected, turn off the room light
             //digitalWrite(LIGHT_PIN, LOW);
-            //led_pin = 0;
-            //printf("No motion detected. Light turned OFF.\n");
+            printf("No motion detected. Light turned OFF.\n");
+            led_pin = 0;
+            led_pin_reg = led_pin*2;
+            asm(
+		"or x30, x30, %0\n\t" 
+		:"=r"(led_pin_reg));
         }
     }
 
@@ -82,13 +99,7 @@ void delaytime(int seconds) {
         }
     }
 }
-int main()
-{   
 
-    readpindetails();
-    return 0;
-        
-}
 ```
 
 ## Assembly code conversion
@@ -96,7 +107,6 @@ int main()
 The above C pogram is compiled using RISC-V GNU tool chain and the assembly code is dumped into a text file.
 
 ```
-
 motion.o:     file format elf64-littleriscv
 
 
@@ -126,7 +136,7 @@ Disassembly of section .text:
    100f8:	00012503          	lw	a0,0(sp)
    100fc:	00810593          	addi	a1,sp,8
    10100:	00000613          	li	a2,0
-   10104:	0ac000ef          	jal	ra,101b0 <main>
+   10104:	07c000ef          	jal	ra,10180 <main>
    10108:	0c00006f          	j	101c8 <exit>
 
 000000000001010c <__do_global_dtors_aux>:
@@ -162,24 +172,24 @@ Disassembly of section .text:
    10178:	00000067          	jr	zero # 0 <register_fini-0x100b0>
    1017c:	00008067          	ret
 
-0000000000010180 <readpindetails>:
-   10180:	0000006f          	j	10180 <readpindetails>
+0000000000010180 <main>:
+   10180:	0000006f          	j	10180 <main>
 
-0000000000010184 <delaytime>:
-   10184:	00000713          	li	a4,0
-   10188:	000f46b7          	lui	a3,0xf4
-   1018c:	24068693          	addi	a3,a3,576 # f4240 <__global_pointer$+0xe2438>
-   10190:	00a05e63          	blez	a0,101ac <delaytime+0x28>
-   10194:	00068793          	mv	a5,a3
-   10198:	fff7879b          	addiw	a5,a5,-1
-   1019c:	fe079ee3          	bnez	a5,10198 <delaytime+0x14>
-   101a0:	0017071b          	addiw	a4,a4,1
-   101a4:	fee518e3          	bne	a0,a4,10194 <delaytime+0x10>
-   101a8:	00008067          	ret
+0000000000010184 <readpindetails>:
+   10184:	0000006f          	j	10184 <readpindetails>
+
+0000000000010188 <delaytime>:
+   10188:	00000713          	li	a4,0
+   1018c:	000f46b7          	lui	a3,0xf4
+   10190:	24068693          	addi	a3,a3,576 # f4240 <__global_pointer$+0xe2438>
+   10194:	00a05e63          	blez	a0,101b0 <delaytime+0x28>
+   10198:	00068793          	mv	a5,a3
+   1019c:	fff7879b          	addiw	a5,a5,-1
+   101a0:	fe079ee3          	bnez	a5,1019c <delaytime+0x14>
+   101a4:	0017071b          	addiw	a4,a4,1
+   101a8:	fee518e3          	bne	a0,a4,10198 <delaytime+0x10>
    101ac:	00008067          	ret
-
-00000000000101b0 <main>:
-   101b0:	0000006f          	j	101b0 <main>
+   101b0:	00008067          	ret
 
 00000000000101b4 <atexit>:
    101b4:	00050593          	mv	a1,a0
@@ -477,42 +487,43 @@ The above assembly code was run on a python script to find the different instruc
 ```
 Number of different instructions: 37
 List of unique instructions:
-blez
-lui
-srai
-sw
-jr
-add
-addi
-sllw
-blt
-mv
-bltu
-jal
-beq
-and
-or
-sext.w
-slli
-negw
-ret
-ecall
-bgeu
-sd
+andi
 sb
+sllw
+addi
+bgeu
+lbu
 sub
-addiw
+sext.w
+blez
 bnez
 j
-auipc
-bltz
-lbu
-li
+jr
+ecall
 ld
-jalr
-andi
+auipc
+negw
 beqz
-lw
 bne
+slli
+jal
+or
+ret
+bltz
+addiw
+lw
+jalr
+sd
+and
+li
+bltu
+add
+blt
+srai
+beq
+mv
+lui
+sw
+
 
 ```
