@@ -1,15 +1,15 @@
 ## IIITB_RISCV_Automated_Room_Lighting_control
 
-This Repository summarizes the work progress made in The RISC-V based project.
+This Repository summarizes the work progress made in The RISC-V-based project.
 
 
 ## Motive
 
-The aim of this project is to create a system for automation of appliances in a home or room based on the proximity of the user. Most rooms are not equipped to automatically turn ON and OFF basic appliances like lights and fans when people enter and exit rooms respectively.This saves a lot of net electricity and helps imporve cost efficeny and power saving. The idea is not to make a home or room fully automated as of now but just to automate basic appliances.
+This project aims to create a system for the automation of appliances in a home or room based on the user's proximity. Most rooms are not equipped to automatically turn ON and OFF essential appliances like lights and fans when people enter and exit rooms respectively. This saves a lot of net electricity and helps improve cost efficiency and power saving. The idea is not to make a home or room fully automated as of now but just to automate essential appliances.
 
 ## Requirement
 
-Here we will be using a PIR sensor.A passive infrared sensor (PIR sensor) is an electronic sensor that measures infrared (IR) light radiating from objects in its field of view. They are most often used in PIR-based motion detectors. This will detect the presence of any indiviuals in the vicinity. If yes our board is programmed to turn on the light(s) in a defined space. If not it will turn OFF automatically.
+Here we will be using a PIR sensor. A passive infrared sensor (PIR sensor) is an electronic sensor that measures infrared (IR) light radiating from objects in its field of view. They are most often used in PIR-based motion detectors. This will detect the presence of any individuals in the vicinity. If yes our board is programmed to turn on the light(s) in a defined space. If not it will turn OFF automatically.
 
 ## Block Diagram
 
@@ -21,7 +21,7 @@ Here we will be using a PIR sensor.A passive infrared sensor (PIR sensor) is an 
 
 1. Open a terminal window
 2. Navigate to the directory when the .c file is present
-3. Comiple the code which is designed using gcc and verify the output.
+3. Compile the code designed using gcc and verify the output.
 
 ```
 gcc motion.c
@@ -29,12 +29,12 @@ gcc motion.c
 ```
 <br />
 
-The following ouput is observed.<br />
-When input from sensor is HIGH:<br />
+The following output is observed.<br />
+When input from the sensor is HIGH:<br />
 ![Screenshot from 2023-10-03 11-20-58](https://github.com/mrdunker/IIITB_home_aa_proximity/assets/38190245/671b40bf-3639-4f5c-a90a-965b181e8bdf)
 <br />
 
-When input from sensor is LOW:<br />
+When input from the sensor is LOW:<br />
 ![Screenshot from 2023-10-03 11-21-37](https://github.com/mrdunker/IIITB_home_aa_proximity/assets/38190245/69fd662b-6de3-48ef-839e-b06de21c5103)
 
 
@@ -104,7 +104,7 @@ void delaytime(int seconds) {
 
 ## Assembly code conversion
 
-The above C pogram is compiled using RISC-V GNU tool chain and the assembly code is dumped into a text file.
+The above C program is compiled using the RISC-V GNU toolchain and the assembly code is dumped into a text file.
 
 ```
 motion.o:     file format elf64-littleriscv
@@ -481,7 +481,7 @@ Disassembly of section .text:
 ```
 
 <br />
-The above assembly code was run on a python script to find the different instructions used:
+The above assembly code was run on a Python script to find the different instructions used:
 <br />
 
 ```
@@ -532,7 +532,8 @@ sw
 1. Kunal Ghosh, VSD Corp. Pvt. Ltd.
 2. Sumanto Kar,VSD Corp.
 3. Mayank Kabra, IIIT-Bangalore
-4. Alwin Shaju,Colleague,IIIT-Bangalore
+4. Alwin Shaju, Colleague, IIIT-Bangalore
+5. Kanish R, Colleague, IIIT-Bangalore
 
 ## References
 
