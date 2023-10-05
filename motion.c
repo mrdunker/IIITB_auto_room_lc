@@ -12,7 +12,7 @@ int main()
 void readpindetails() {
 
     int led_pin,sensor_pin,led_pin_reg;
-
+    led_pin = 0;
     led_pin_reg = led_pin*2;
     //printf("Motion sensor-based room light control started.\n");
     asm(
