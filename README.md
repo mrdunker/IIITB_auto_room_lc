@@ -1,11 +1,11 @@
 ## IIITB_RISCV_Automated_Room_Lighting_control
 
 This Repository summarizes the work progress made in The RISC-V-based project.
-
+<br />
 
 ## Motive
 
-This project aims to create a system for the automation of appliances in a home or room based on the user's proximity. Most rooms are not equipped to automatically turn ON and OFF essential appliances like lights and fans when people enter and exit rooms respectively. This saves a lot of net electricity and helps improve cost efficiency and power saving. The idea is not to make a home or room fully automated as of now but just to automate essential appliances.
+This project aims to create a system for the automation of appliances in a room based on the user's proximity. Most rooms are not equipped to automatically turn ON and OFF essential appliances like lights and fans when people enter and exit rooms respectively. This saves a lot of net electricity and helps improve cost efficiency and power saving. This particular design is made predominantly for office and school spaces rather than homes.<br />
 
 ## Requirement
 
