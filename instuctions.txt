@@ -1,40 +1,20 @@
-Number of different instructions: 37
+Number of different instructions: 17
 List of unique instructions:
-andi
-sb
-sllw
-addi
-bgeu
-lbu
-sub
-sext.w
-blez
-bnez
-j
-jr
-ecall
-ld
-auipc
-negw
-beqz
-bne
-slli
-jal
-or
-ret
-bltz
-addiw
-lw
-jalr
-sd
-and
-li
-bltu
-add
-blt
-srai
-beq
-mv
-lui
 sw
+nop
+bge
+add
+sll
+lui
+and
+jalr
+lw
+ret
+bne
+auipc
+or
+mv
+blt
+j
+li
 
