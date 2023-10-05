@@ -1,4 +1,4 @@
-#include <stdio.h>
+//#include <stdio.h>
 void delaytime(int);
 void readpindetails();
 
@@ -27,7 +27,7 @@ void readpindetails() {
         if (sensor_pin == 1) {
             // Motion detected, turn on the room light
             //digitalWrite(LIGHT_PIN, HIGH);
-            printf("Motion detected. Light turned ON.\n");
+            //printf("Motion detected. Light turned ON.\n");
             led_pin = 1;
             led_pin_reg = led_pin*2;
             asm(
@@ -38,7 +38,7 @@ void readpindetails() {
         } else {
             // No motion detected, turn off the room light
             //digitalWrite(LIGHT_PIN, LOW);
-            printf("No motion detected. Light turned OFF.\n");
+            //printf("No motion detected. Light turned OFF.\n");
             led_pin = 0;
             led_pin_reg = led_pin*2;
             asm(
