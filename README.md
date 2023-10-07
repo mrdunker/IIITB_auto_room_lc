@@ -63,12 +63,20 @@ void readpindetails() {
     led_pin = 0; // initialize the output pin as LOW initially
     led_pin_reg = led_pin*2;
     //printf("Motion sensor-based room light control started.\n");
-    asm(
+
+    asm volatile(
 	"or x30, x30, %0\n\t" 
-	:"=r"(led_pin_reg));
-    asm(
+	:
+	:"r"(led_pin_reg)
+	:"x30"
+	);
+
+    asm volatile(
 	"andi %0, x30, 1\n\t"
-	:"=r"(sensor_pin));
+	:"=r"(sensor_pin)
+	:
+	:
+	);
 	
     while (1) {
 
@@ -78,9 +86,12 @@ void readpindetails() {
             //printf("Motion detected. Light turned ON.\n");
             led_pin = 1;
             led_pin_reg = led_pin*2;
-            asm(
+            asm volatile(
 		"or x30, x30, %0\n\t" 
-		:"=r"(led_pin_reg));
+		:
+		:"r"(led_pin_reg)
+		:"x30"
+		);
             delaytime(3000);// Almost 6 second delay is given
             // You can add a delay here to control how long the light stays on
         } else {
@@ -89,9 +100,12 @@ void readpindetails() {
             //printf("No motion detected. Light turned OFF.\n");
             led_pin = 0;
             led_pin_reg = led_pin*2;
-            asm(
+            asm volatile(
 		"or x30, x30, %0\n\t" 
-		:"=r"(led_pin_reg));
+		:
+		:"r"(led_pin_reg)
+		:"x30"
+		);
         }
     }
 
@@ -112,7 +126,6 @@ void delaytime(int seconds) {
 The above C program is compiled using the RISC-V GNU toolchain and the assembly code is dumped into a text file.
 
 ```
-
 motion.o:     file format elf32-littleriscv
 
 
@@ -141,9 +154,9 @@ Disassembly of section .text:
   44:	fec42783          	lw	a5,-20(s0)
   48:	00179793          	sll	a5,a5,0x1
   4c:	fef42423          	sw	a5,-24(s0)
-  50:	00ff6f33          	or	t5,t5,a5
-  54:	fef42423          	sw	a5,-24(s0)
-  58:	000f7793          	and	a5,t5,0
+  50:	fe842783          	lw	a5,-24(s0)
+  54:	00ff6f33          	or	t5,t5,a5
+  58:	001f7793          	and	a5,t5,1
   5c:	fef42223          	sw	a5,-28(s0)
 
 00000060 <.L6>:
@@ -155,8 +168,8 @@ Disassembly of section .text:
   74:	fec42783          	lw	a5,-20(s0)
   78:	00179793          	sll	a5,a5,0x1
   7c:	fef42423          	sw	a5,-24(s0)
-  80:	00ff6f33          	or	t5,t5,a5
-  84:	fef42423          	sw	a5,-24(s0)
+  80:	fe842783          	lw	a5,-24(s0)
+  84:	00ff6f33          	or	t5,t5,a5
   88:	000017b7          	lui	a5,0x1
   8c:	bb878513          	add	a0,a5,-1096 # bb8 <.L8+0xab8>
   90:	00000097          	auipc	ra,0x0
@@ -168,8 +181,8 @@ Disassembly of section .text:
   a0:	fec42783          	lw	a5,-20(s0)
   a4:	00179793          	sll	a5,a5,0x1
   a8:	fef42423          	sw	a5,-24(s0)
-  ac:	00ff6f33          	or	t5,t5,a5
-  b0:	fef42423          	sw	a5,-24(s0)
+  ac:	fe842783          	lw	a5,-24(s0)
+  b0:	00ff6f33          	or	t5,t5,a5
   b4:	fadff06f          	j	60 <.L6>
 
 000000b8 <delaytime>:
@@ -208,7 +221,6 @@ Disassembly of section .text:
  118:	03010113          	add	sp,sp,48
  11c:	00008067          	ret
 
-
 ```
 
 <br />
@@ -218,23 +230,23 @@ The above assembly code was run on a Python script to find the different instruc
 ```
 Number of different instructions: 17
 List of unique instructions:
-lw
-add
-sll
-or
-j
-ret
-jalr
-bge
-mv
 bne
-nop
-li
+j
 auipc
-and
-blt
-lui
+li
 sw
+mv
+or
+bge
+lui
+and
+nop
+lw
+jalr
+add
+ret
+blt
+sll
 
 ```
 
