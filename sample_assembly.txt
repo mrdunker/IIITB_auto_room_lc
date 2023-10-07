@@ -1,4 +1,3 @@
-
 motion.o:     file format elf32-littleriscv
 
 
@@ -27,9 +26,9 @@ Disassembly of section .text:
   44:	fec42783          	lw	a5,-20(s0)
   48:	00179793          	sll	a5,a5,0x1
   4c:	fef42423          	sw	a5,-24(s0)
-  50:	00ff6f33          	or	t5,t5,a5
-  54:	fef42423          	sw	a5,-24(s0)
-  58:	000f7793          	and	a5,t5,0
+  50:	fe842783          	lw	a5,-24(s0)
+  54:	00ff6f33          	or	t5,t5,a5
+  58:	001f7793          	and	a5,t5,1
   5c:	fef42223          	sw	a5,-28(s0)
 
 00000060 <.L6>:
@@ -41,8 +40,8 @@ Disassembly of section .text:
   74:	fec42783          	lw	a5,-20(s0)
   78:	00179793          	sll	a5,a5,0x1
   7c:	fef42423          	sw	a5,-24(s0)
-  80:	00ff6f33          	or	t5,t5,a5
-  84:	fef42423          	sw	a5,-24(s0)
+  80:	fe842783          	lw	a5,-24(s0)
+  84:	00ff6f33          	or	t5,t5,a5
   88:	000017b7          	lui	a5,0x1
   8c:	bb878513          	add	a0,a5,-1096 # bb8 <.L8+0xab8>
   90:	00000097          	auipc	ra,0x0
@@ -54,8 +53,8 @@ Disassembly of section .text:
   a0:	fec42783          	lw	a5,-20(s0)
   a4:	00179793          	sll	a5,a5,0x1
   a8:	fef42423          	sw	a5,-24(s0)
-  ac:	00ff6f33          	or	t5,t5,a5
-  b0:	fef42423          	sw	a5,-24(s0)
+  ac:	fe842783          	lw	a5,-24(s0)
+  b0:	00ff6f33          	or	t5,t5,a5
   b4:	fadff06f          	j	60 <.L6>
 
 000000b8 <delaytime>:

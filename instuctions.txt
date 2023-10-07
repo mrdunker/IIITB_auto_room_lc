@@ -1,20 +1,20 @@
 Number of different instructions: 17
 List of unique instructions:
-lw
-add
-sll
-or
-j
-ret
-jalr
-bge
-mv
 bne
-nop
-li
+j
 auipc
-and
-blt
-lui
+li
 sw
+mv
+or
+bge
+lui
+and
+nop
+lw
+jalr
+add
+ret
+blt
+sll
 
