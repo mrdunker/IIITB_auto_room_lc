@@ -133,6 +133,9 @@ Below codes are run on the terminal to get the assembly code.<br />
 /home/emil/riscv32-toolchain/bin/riscv32-unknown-elf-objdump -d -r out > motion_assembly.txt
 ```
 
+
+### Assembly code:
+
 ```
 
 out:     file format elf32-littleriscv
