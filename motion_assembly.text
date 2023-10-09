@@ -1,0 +1,88 @@
+
+out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00010094 <main>:
+   10094:	ff010113          	add	sp,sp,-16
+   10098:	00112623          	sw	ra,12(sp)
+   1009c:	00812423          	sw	s0,8(sp)
+   100a0:	01010413          	add	s0,sp,16
+   100a4:	000117b7          	lui	a5,0x11
+   100a8:	1c07a423          	sw	zero,456(a5) # 111c8 <__DATA_BEGIN__>
+   100ac:	000117b7          	lui	a5,0x11
+   100b0:	1c87a783          	lw	a5,456(a5) # 111c8 <__DATA_BEGIN__>
+   100b4:	00179713          	sll	a4,a5,0x1
+   100b8:	80e1a423          	sw	a4,-2040(gp) # 111d0 <led_pin_reg>
+   100bc:	8081a783          	lw	a5,-2040(gp) # 111d0 <led_pin_reg>
+   100c0:	00ff6f33          	or	t5,t5,a5
+   100c4:	008000ef          	jal	100cc <readpindetails>
+   100c8:	ffdff06f          	j	100c4 <main+0x30>
+
+000100cc <readpindetails>:
+   100cc:	ff010113          	add	sp,sp,-16
+   100d0:	00112623          	sw	ra,12(sp)
+   100d4:	00812423          	sw	s0,8(sp)
+   100d8:	01010413          	add	s0,sp,16
+   100dc:	001f7713          	and	a4,t5,1
+   100e0:	000117b7          	lui	a5,0x11
+   100e4:	1ce7a623          	sw	a4,460(a5) # 111cc <sensor_pin>
+   100e8:	000117b7          	lui	a5,0x11
+   100ec:	1cc7a703          	lw	a4,460(a5) # 111cc <sensor_pin>
+   100f0:	00100793          	li	a5,1
+   100f4:	02f71c63          	bne	a4,a5,1012c <readpindetails+0x60>
+   100f8:	000117b7          	lui	a5,0x11
+   100fc:	00100713          	li	a4,1
+   10100:	1ce7a423          	sw	a4,456(a5) # 111c8 <__DATA_BEGIN__>
+   10104:	000117b7          	lui	a5,0x11
+   10108:	1c87a783          	lw	a5,456(a5) # 111c8 <__DATA_BEGIN__>
+   1010c:	00179713          	sll	a4,a5,0x1
+   10110:	80e1a423          	sw	a4,-2040(gp) # 111d0 <led_pin_reg>
+   10114:	8081a783          	lw	a5,-2040(gp) # 111d0 <led_pin_reg>
+   10118:	00ff6f33          	or	t5,t5,a5
+   1011c:	000017b7          	lui	a5,0x1
+   10120:	bb878513          	add	a0,a5,-1096 # bb8 <main-0xf4dc>
+   10124:	03c000ef          	jal	10160 <delaytime>
+   10128:	0240006f          	j	1014c <readpindetails+0x80>
+   1012c:	000117b7          	lui	a5,0x11
+   10130:	1c07a423          	sw	zero,456(a5) # 111c8 <__DATA_BEGIN__>
+   10134:	000117b7          	lui	a5,0x11
+   10138:	1c87a783          	lw	a5,456(a5) # 111c8 <__DATA_BEGIN__>
+   1013c:	00179713          	sll	a4,a5,0x1
+   10140:	80e1a423          	sw	a4,-2040(gp) # 111d0 <led_pin_reg>
+   10144:	8081a783          	lw	a5,-2040(gp) # 111d0 <led_pin_reg>
+   10148:	00ff6f33          	or	t5,t5,a5
+   1014c:	00000013          	nop
+   10150:	00c12083          	lw	ra,12(sp)
+   10154:	00812403          	lw	s0,8(sp)
+   10158:	01010113          	add	sp,sp,16
+   1015c:	00008067          	ret
+
+00010160 <delaytime>:
+   10160:	fd010113          	add	sp,sp,-48
+   10164:	02812623          	sw	s0,44(sp)
+   10168:	03010413          	add	s0,sp,48
+   1016c:	fca42e23          	sw	a0,-36(s0)
+   10170:	fe042623          	sw	zero,-20(s0)
+   10174:	0340006f          	j	101a8 <delaytime+0x48>
+   10178:	fe042423          	sw	zero,-24(s0)
+   1017c:	0100006f          	j	1018c <delaytime+0x2c>
+   10180:	fe842783          	lw	a5,-24(s0)
+   10184:	00178793          	add	a5,a5,1
+   10188:	fef42423          	sw	a5,-24(s0)
+   1018c:	fe842703          	lw	a4,-24(s0)
+   10190:	000f47b7          	lui	a5,0xf4
+   10194:	23f78793          	add	a5,a5,575 # f423f <__global_pointer$+0xe2877>
+   10198:	fee7d4e3          	bge	a5,a4,10180 <delaytime+0x20>
+   1019c:	fec42783          	lw	a5,-20(s0)
+   101a0:	00178793          	add	a5,a5,1
+   101a4:	fef42623          	sw	a5,-20(s0)
+   101a8:	fec42703          	lw	a4,-20(s0)
+   101ac:	fdc42783          	lw	a5,-36(s0)
+   101b0:	fcf744e3          	blt	a4,a5,10178 <delaytime+0x18>
+   101b4:	00000013          	nop
+   101b8:	00000013          	nop
+   101bc:	02c12403          	lw	s0,44(sp)
+   101c0:	03010113          	add	sp,sp,48
+   101c4:	00008067          	ret

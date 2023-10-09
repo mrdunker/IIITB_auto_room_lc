@@ -1,10 +1,22 @@
 
+int led_pin,sensor_pin,led_pin_reg;
+
 void delaytime(int);
 void readpindetails();
 
 int main()
 {   
  
+ led_pin = 0; // initialize the output pin as LOW initially
+ led_pin_reg = led_pin*2;
+ 
+    asm volatile(
+	"or x30, x30, %0\n\t" 
+	:
+	:"r"(led_pin_reg)
+	:"x30"
+	);
+
  while(1){
     readpindetails();
     }
@@ -13,17 +25,8 @@ int main()
 }
 void readpindetails() {
 
-    int led_pin,sensor_pin,led_pin_reg;
-    led_pin = 0; // initialize the output pin as LOW initially
-    led_pin_reg = led_pin*2;
-    //printf("Motion sensor-based room light control started.\n");
 
-    asm volatile(
-	"or x30, x30, %0\n\t" 
-	:
-	:"r"(led_pin_reg)
-	:"x30"
-	);
+    //"Motion sensor-based room light control started"
 
     asm volatile(
 	"andi %0, x30, 1\n\t"
