@@ -123,103 +123,98 @@ void delaytime(int seconds) {
 
 ## Assembly code conversion
 
-The above C program is compiled using the RISC-V GNU toolchain and the assembly code is dumped into a text file.
+The above C program is compiled using the RISC-V GNU toolchain and the assembly code is dumped into a text file.<br />
+
+Below codes are run on the terminal to get the assembly code.<br />
 
 ```
-motion.o:     file format elf32-littleriscv
+/home/emil/riscv32-toolchain/bin/riscv32-unknown-elf-gcc -mabi=ilp32 -march=rv32i -ffreestanding -nostdlib -o ./out motion.c
+
+/home/emil/riscv32-toolchain/bin/riscv32-unknown-elf-objdump -d -r out > motion_assembly.txt
+```
+
+```
+
+out:     file format elf32-littleriscv
 
 
 Disassembly of section .text:
 
-00000000 <main>:
-   0:	ff010113          	add	sp,sp,-16
-   4:	00112623          	sw	ra,12(sp)
-   8:	00812423          	sw	s0,8(sp)
-   c:	01010413          	add	s0,sp,16
-  10:	00000097          	auipc	ra,0x0
-  14:	000080e7          	jalr	ra # 10 <main+0x10>
-  18:	00000793          	li	a5,0
-  1c:	00078513          	mv	a0,a5
-  20:	00c12083          	lw	ra,12(sp)
-  24:	00812403          	lw	s0,8(sp)
-  28:	01010113          	add	sp,sp,16
-  2c:	00008067          	ret
+00010074 <main>:
+   10074:	ff010113          	add	sp,sp,-16
+   10078:	00112623          	sw	ra,12(sp)
+   1007c:	00812423          	sw	s0,8(sp)
+   10080:	01010413          	add	s0,sp,16
+   10084:	01c000ef          	jal	100a0 <readpindetails>
+   10088:	00000793          	li	a5,0
+   1008c:	00078513          	mv	a0,a5
+   10090:	00c12083          	lw	ra,12(sp)
+   10094:	00812403          	lw	s0,8(sp)
+   10098:	01010113          	add	sp,sp,16
+   1009c:	00008067          	ret
 
-00000030 <readpindetails>:
-  30:	fe010113          	add	sp,sp,-32
-  34:	00112e23          	sw	ra,28(sp)
-  38:	00812c23          	sw	s0,24(sp)
-  3c:	02010413          	add	s0,sp,32
-  40:	fe042623          	sw	zero,-20(s0)
-  44:	fec42783          	lw	a5,-20(s0)
-  48:	00179793          	sll	a5,a5,0x1
-  4c:	fef42423          	sw	a5,-24(s0)
-  50:	fe842783          	lw	a5,-24(s0)
-  54:	00ff6f33          	or	t5,t5,a5
-  58:	001f7793          	and	a5,t5,1
-  5c:	fef42223          	sw	a5,-28(s0)
+000100a0 <readpindetails>:
+   100a0:	fe010113          	add	sp,sp,-32
+   100a4:	00112e23          	sw	ra,28(sp)
+   100a8:	00812c23          	sw	s0,24(sp)
+   100ac:	02010413          	add	s0,sp,32
+   100b0:	fe042623          	sw	zero,-20(s0)
+   100b4:	fec42783          	lw	a5,-20(s0)
+   100b8:	00179793          	sll	a5,a5,0x1
+   100bc:	fef42423          	sw	a5,-24(s0)
+   100c0:	fe842783          	lw	a5,-24(s0)
+   100c4:	00ff6f33          	or	t5,t5,a5
+   100c8:	001f7793          	and	a5,t5,1
+   100cc:	fef42223          	sw	a5,-28(s0)
+   100d0:	fe442703          	lw	a4,-28(s0)
+   100d4:	00100793          	li	a5,1
+   100d8:	02f71863          	bne	a4,a5,10108 <readpindetails+0x68>
+   100dc:	00100793          	li	a5,1
+   100e0:	fef42623          	sw	a5,-20(s0)
+   100e4:	fec42783          	lw	a5,-20(s0)
+   100e8:	00179793          	sll	a5,a5,0x1
+   100ec:	fef42423          	sw	a5,-24(s0)
+   100f0:	fe842783          	lw	a5,-24(s0)
+   100f4:	00ff6f33          	or	t5,t5,a5
+   100f8:	000017b7          	lui	a5,0x1
+   100fc:	bb878513          	add	a0,a5,-1096 # bb8 <main-0xf4bc>
+   10100:	024000ef          	jal	10124 <delaytime>
+   10104:	fcdff06f          	j	100d0 <readpindetails+0x30>
+   10108:	fe042623          	sw	zero,-20(s0)
+   1010c:	fec42783          	lw	a5,-20(s0)
+   10110:	00179793          	sll	a5,a5,0x1
+   10114:	fef42423          	sw	a5,-24(s0)
+   10118:	fe842783          	lw	a5,-24(s0)
+   1011c:	00ff6f33          	or	t5,t5,a5
+   10120:	fb1ff06f          	j	100d0 <readpindetails+0x30>
 
-00000060 <.L6>:
-  60:	fe442703          	lw	a4,-28(s0)
-  64:	00100793          	li	a5,1
-  68:	02f71a63          	bne	a4,a5,9c <.L4>
-  6c:	00100793          	li	a5,1
-  70:	fef42623          	sw	a5,-20(s0)
-  74:	fec42783          	lw	a5,-20(s0)
-  78:	00179793          	sll	a5,a5,0x1
-  7c:	fef42423          	sw	a5,-24(s0)
-  80:	fe842783          	lw	a5,-24(s0)
-  84:	00ff6f33          	or	t5,t5,a5
-  88:	000017b7          	lui	a5,0x1
-  8c:	bb878513          	add	a0,a5,-1096 # bb8 <.L8+0xab8>
-  90:	00000097          	auipc	ra,0x0
-  94:	000080e7          	jalr	ra # 90 <.L6+0x30>
-  98:	fc9ff06f          	j	60 <.L6>
-
-0000009c <.L4>:
-  9c:	fe042623          	sw	zero,-20(s0)
-  a0:	fec42783          	lw	a5,-20(s0)
-  a4:	00179793          	sll	a5,a5,0x1
-  a8:	fef42423          	sw	a5,-24(s0)
-  ac:	fe842783          	lw	a5,-24(s0)
-  b0:	00ff6f33          	or	t5,t5,a5
-  b4:	fadff06f          	j	60 <.L6>
-
-000000b8 <delaytime>:
-  b8:	fd010113          	add	sp,sp,-48
-  bc:	02812623          	sw	s0,44(sp)
-  c0:	03010413          	add	s0,sp,48
-  c4:	fca42e23          	sw	a0,-36(s0)
-  c8:	fe042623          	sw	zero,-20(s0)
-  cc:	0340006f          	j	100 <.L8>
-
-000000d0 <.L11>:
-  d0:	fe042423          	sw	zero,-24(s0)
-  d4:	0100006f          	j	e4 <.L9>
-
-000000d8 <.L10>:
-  d8:	fe842783          	lw	a5,-24(s0)
-  dc:	00178793          	add	a5,a5,1
-  e0:	fef42423          	sw	a5,-24(s0)
-
-000000e4 <.L9>:
-  e4:	fe842703          	lw	a4,-24(s0)
-  e8:	000f47b7          	lui	a5,0xf4
-  ec:	23f78793          	add	a5,a5,575 # f423f <.L8+0xf413f>
-  f0:	fee7d4e3          	bge	a5,a4,d8 <.L10>
-  f4:	fec42783          	lw	a5,-20(s0)
-  f8:	00178793          	add	a5,a5,1
-  fc:	fef42623          	sw	a5,-20(s0)
-
-00000100 <.L8>:
- 100:	fec42703          	lw	a4,-20(s0)
- 104:	fdc42783          	lw	a5,-36(s0)
- 108:	fcf744e3          	blt	a4,a5,d0 <.L11>
- 10c:	00000013          	nop
- 110:	00000013          	nop
- 114:	02c12403          	lw	s0,44(sp)
- 118:	03010113          	add	sp,sp,48
- 11c:	00008067          	ret
+00010124 <delaytime>:
+   10124:	fd010113          	add	sp,sp,-48
+   10128:	02812623          	sw	s0,44(sp)
+   1012c:	03010413          	add	s0,sp,48
+   10130:	fca42e23          	sw	a0,-36(s0)
+   10134:	fe042623          	sw	zero,-20(s0)
+   10138:	0340006f          	j	1016c <delaytime+0x48>
+   1013c:	fe042423          	sw	zero,-24(s0)
+   10140:	0100006f          	j	10150 <delaytime+0x2c>
+   10144:	fe842783          	lw	a5,-24(s0)
+   10148:	00178793          	add	a5,a5,1
+   1014c:	fef42423          	sw	a5,-24(s0)
+   10150:	fe842703          	lw	a4,-24(s0)
+   10154:	000f47b7          	lui	a5,0xf4
+   10158:	23f78793          	add	a5,a5,575 # f423f <__global_pointer$+0xe28b3>
+   1015c:	fee7d4e3          	bge	a5,a4,10144 <delaytime+0x20>
+   10160:	fec42783          	lw	a5,-20(s0)
+   10164:	00178793          	add	a5,a5,1
+   10168:	fef42623          	sw	a5,-20(s0)
+   1016c:	fec42703          	lw	a4,-20(s0)
+   10170:	fdc42783          	lw	a5,-36(s0)
+   10174:	fcf744e3          	blt	a4,a5,1013c <delaytime+0x18>
+   10178:	00000013          	nop
+   1017c:	00000013          	nop
+   10180:	02c12403          	lw	s0,44(sp)
+   10184:	03010113          	add	sp,sp,48
+   10188:	00008067          	ret
 
 ```
 
@@ -228,25 +223,24 @@ The above assembly code was run on a Python script to find the different instruc
 <br />
 
 ```
-Number of different instructions: 17
+Number of different instructions: 16
 List of unique instructions:
-bne
-j
-auipc
-li
 sw
 mv
-or
-bge
-lui
-and
-nop
 lw
-jalr
-add
-ret
+or
+nop
+bne
 blt
+bge
+jal
 sll
+lui
+ret
+and
+j
+add
+li
 
 ```
 
