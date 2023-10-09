@@ -1,19 +1,19 @@
-Number of different instructions: 16
+Number of different instructions: 15
 List of unique instructions:
-sw
-mv
-lw
-or
-nop
-bne
-blt
-bge
-jal
-sll
-lui
-ret
-and
-j
 add
+sw
+and
 li
+bne
+ret
+sll
+or
+lui
+j
+lw
+bge
+blt
+nop
+jal
+
 

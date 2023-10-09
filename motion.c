@@ -4,8 +4,10 @@ void readpindetails();
 
 int main()
 {   
-
+ 
+ while(1){
     readpindetails();
+    }
     return 0;
         
 }
@@ -29,8 +31,6 @@ void readpindetails() {
 	:
 	:
 	);
-	
-    while (1) {
 
         if (sensor_pin == 1) {
             // Motion detected, turn on the room light
@@ -59,7 +59,6 @@ void readpindetails() {
 		:"x30"
 		);
         }
-    }
 
 }
 void delaytime(int seconds) {

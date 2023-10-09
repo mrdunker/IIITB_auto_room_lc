@@ -9,73 +9,72 @@ Disassembly of section .text:
    10078:	00112623          	sw	ra,12(sp)
    1007c:	00812423          	sw	s0,8(sp)
    10080:	01010413          	add	s0,sp,16
-   10084:	01c000ef          	jal	100a0 <readpindetails>
-   10088:	00000793          	li	a5,0
-   1008c:	00078513          	mv	a0,a5
-   10090:	00c12083          	lw	ra,12(sp)
-   10094:	00812403          	lw	s0,8(sp)
-   10098:	01010113          	add	sp,sp,16
-   1009c:	00008067          	ret
+   10084:	008000ef          	jal	1008c <readpindetails>
+   10088:	ffdff06f          	j	10084 <main+0x10>
 
-000100a0 <readpindetails>:
-   100a0:	fe010113          	add	sp,sp,-32
-   100a4:	00112e23          	sw	ra,28(sp)
-   100a8:	00812c23          	sw	s0,24(sp)
-   100ac:	02010413          	add	s0,sp,32
-   100b0:	fe042623          	sw	zero,-20(s0)
-   100b4:	fec42783          	lw	a5,-20(s0)
-   100b8:	00179793          	sll	a5,a5,0x1
-   100bc:	fef42423          	sw	a5,-24(s0)
-   100c0:	fe842783          	lw	a5,-24(s0)
-   100c4:	00ff6f33          	or	t5,t5,a5
-   100c8:	001f7793          	and	a5,t5,1
-   100cc:	fef42223          	sw	a5,-28(s0)
-   100d0:	fe442703          	lw	a4,-28(s0)
-   100d4:	00100793          	li	a5,1
-   100d8:	02f71863          	bne	a4,a5,10108 <readpindetails+0x68>
-   100dc:	00100793          	li	a5,1
-   100e0:	fef42623          	sw	a5,-20(s0)
-   100e4:	fec42783          	lw	a5,-20(s0)
-   100e8:	00179793          	sll	a5,a5,0x1
-   100ec:	fef42423          	sw	a5,-24(s0)
-   100f0:	fe842783          	lw	a5,-24(s0)
-   100f4:	00ff6f33          	or	t5,t5,a5
-   100f8:	000017b7          	lui	a5,0x1
-   100fc:	bb878513          	add	a0,a5,-1096 # bb8 <main-0xf4bc>
-   10100:	024000ef          	jal	10124 <delaytime>
-   10104:	fcdff06f          	j	100d0 <readpindetails+0x30>
-   10108:	fe042623          	sw	zero,-20(s0)
-   1010c:	fec42783          	lw	a5,-20(s0)
-   10110:	00179793          	sll	a5,a5,0x1
-   10114:	fef42423          	sw	a5,-24(s0)
-   10118:	fe842783          	lw	a5,-24(s0)
-   1011c:	00ff6f33          	or	t5,t5,a5
-   10120:	fb1ff06f          	j	100d0 <readpindetails+0x30>
+0001008c <readpindetails>:
+   1008c:	fe010113          	add	sp,sp,-32
+   10090:	00112e23          	sw	ra,28(sp)
+   10094:	00812c23          	sw	s0,24(sp)
+   10098:	02010413          	add	s0,sp,32
+   1009c:	fe042623          	sw	zero,-20(s0)
+   100a0:	fec42783          	lw	a5,-20(s0)
+   100a4:	00179793          	sll	a5,a5,0x1
+   100a8:	fef42423          	sw	a5,-24(s0)
+   100ac:	fe842783          	lw	a5,-24(s0)
+   100b0:	00ff6f33          	or	t5,t5,a5
+   100b4:	001f7793          	and	a5,t5,1
+   100b8:	fef42223          	sw	a5,-28(s0)
+   100bc:	fe442703          	lw	a4,-28(s0)
+   100c0:	00100793          	li	a5,1
+   100c4:	02f71863          	bne	a4,a5,100f4 <readpindetails+0x68>
+   100c8:	00100793          	li	a5,1
+   100cc:	fef42623          	sw	a5,-20(s0)
+   100d0:	fec42783          	lw	a5,-20(s0)
+   100d4:	00179793          	sll	a5,a5,0x1
+   100d8:	fef42423          	sw	a5,-24(s0)
+   100dc:	fe842783          	lw	a5,-24(s0)
+   100e0:	00ff6f33          	or	t5,t5,a5
+   100e4:	000017b7          	lui	a5,0x1
+   100e8:	bb878513          	add	a0,a5,-1096 # bb8 <main-0xf4bc>
+   100ec:	034000ef          	jal	10120 <delaytime>
+   100f0:	01c0006f          	j	1010c <readpindetails+0x80>
+   100f4:	fe042623          	sw	zero,-20(s0)
+   100f8:	fec42783          	lw	a5,-20(s0)
+   100fc:	00179793          	sll	a5,a5,0x1
+   10100:	fef42423          	sw	a5,-24(s0)
+   10104:	fe842783          	lw	a5,-24(s0)
+   10108:	00ff6f33          	or	t5,t5,a5
+   1010c:	00000013          	nop
+   10110:	01c12083          	lw	ra,28(sp)
+   10114:	01812403          	lw	s0,24(sp)
+   10118:	02010113          	add	sp,sp,32
+   1011c:	00008067          	ret
 
-00010124 <delaytime>:
-   10124:	fd010113          	add	sp,sp,-48
-   10128:	02812623          	sw	s0,44(sp)
-   1012c:	03010413          	add	s0,sp,48
-   10130:	fca42e23          	sw	a0,-36(s0)
-   10134:	fe042623          	sw	zero,-20(s0)
-   10138:	0340006f          	j	1016c <delaytime+0x48>
-   1013c:	fe042423          	sw	zero,-24(s0)
-   10140:	0100006f          	j	10150 <delaytime+0x2c>
-   10144:	fe842783          	lw	a5,-24(s0)
-   10148:	00178793          	add	a5,a5,1
-   1014c:	fef42423          	sw	a5,-24(s0)
-   10150:	fe842703          	lw	a4,-24(s0)
-   10154:	000f47b7          	lui	a5,0xf4
-   10158:	23f78793          	add	a5,a5,575 # f423f <__global_pointer$+0xe28b3>
-   1015c:	fee7d4e3          	bge	a5,a4,10144 <delaytime+0x20>
-   10160:	fec42783          	lw	a5,-20(s0)
-   10164:	00178793          	add	a5,a5,1
-   10168:	fef42623          	sw	a5,-20(s0)
-   1016c:	fec42703          	lw	a4,-20(s0)
-   10170:	fdc42783          	lw	a5,-36(s0)
-   10174:	fcf744e3          	blt	a4,a5,1013c <delaytime+0x18>
+00010120 <delaytime>:
+   10120:	fd010113          	add	sp,sp,-48
+   10124:	02812623          	sw	s0,44(sp)
+   10128:	03010413          	add	s0,sp,48
+   1012c:	fca42e23          	sw	a0,-36(s0)
+   10130:	fe042623          	sw	zero,-20(s0)
+   10134:	0340006f          	j	10168 <delaytime+0x48>
+   10138:	fe042423          	sw	zero,-24(s0)
+   1013c:	0100006f          	j	1014c <delaytime+0x2c>
+   10140:	fe842783          	lw	a5,-24(s0)
+   10144:	00178793          	add	a5,a5,1
+   10148:	fef42423          	sw	a5,-24(s0)
+   1014c:	fe842703          	lw	a4,-24(s0)
+   10150:	000f47b7          	lui	a5,0xf4
+   10154:	23f78793          	add	a5,a5,575 # f423f <__global_pointer$+0xe28b7>
+   10158:	fee7d4e3          	bge	a5,a4,10140 <delaytime+0x20>
+   1015c:	fec42783          	lw	a5,-20(s0)
+   10160:	00178793          	add	a5,a5,1
+   10164:	fef42623          	sw	a5,-20(s0)
+   10168:	fec42703          	lw	a4,-20(s0)
+   1016c:	fdc42783          	lw	a5,-36(s0)
+   10170:	fcf744e3          	blt	a4,a5,10138 <delaytime+0x18>
+   10174:	00000013          	nop
    10178:	00000013          	nop
-   1017c:	00000013          	nop
-   10180:	02c12403          	lw	s0,44(sp)
-   10184:	03010113          	add	sp,sp,48
-   10188:	00008067          	ret
+   1017c:	02c12403          	lw	s0,44(sp)
+   10180:	03010113          	add	sp,sp,48
+   10184:	00008067          	ret
