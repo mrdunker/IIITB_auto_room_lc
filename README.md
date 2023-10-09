@@ -47,12 +47,24 @@ When input from the sensor is LOW:<br />
 
 ```
 
+int led_pin,sensor_pin,led_pin_reg;
+
 void delaytime(int);
 void readpindetails();
 
 int main()
 {   
  
+ led_pin = 0; // initialize the output pin as LOW initially
+ led_pin_reg = led_pin*2;
+ 
+    asm volatile(
+	"or x30, x30, %0\n\t" 
+	:
+	:"r"(led_pin_reg)
+	:"x30"
+	);
+
  while(1){
     readpindetails();
     }
@@ -61,17 +73,8 @@ int main()
 }
 void readpindetails() {
 
-    int led_pin,sensor_pin,led_pin_reg;
-    led_pin = 0; // initialize the output pin as LOW initially
-    led_pin_reg = led_pin*2;
-    //printf("Motion sensor-based room light control started.\n");
 
-    asm volatile(
-	"or x30, x30, %0\n\t" 
-	:
-	:"r"(led_pin_reg)
-	:"x30"
-	);
+    //"Motion sensor-based room light control started"
 
     asm volatile(
 	"andi %0, x30, 1\n\t"
@@ -143,80 +146,88 @@ out:     file format elf32-littleriscv
 
 Disassembly of section .text:
 
-00010074 <main>:
-   10074:	ff010113          	add	sp,sp,-16
-   10078:	00112623          	sw	ra,12(sp)
-   1007c:	00812423          	sw	s0,8(sp)
-   10080:	01010413          	add	s0,sp,16
-   10084:	008000ef          	jal	1008c <readpindetails>
-   10088:	ffdff06f          	j	10084 <main+0x10>
+00010094 <main>:
+   10094:	ff010113          	add	sp,sp,-16
+   10098:	00112623          	sw	ra,12(sp)
+   1009c:	00812423          	sw	s0,8(sp)
+   100a0:	01010413          	add	s0,sp,16
+   100a4:	000117b7          	lui	a5,0x11
+   100a8:	1c07a423          	sw	zero,456(a5) # 111c8 <__DATA_BEGIN__>
+   100ac:	000117b7          	lui	a5,0x11
+   100b0:	1c87a783          	lw	a5,456(a5) # 111c8 <__DATA_BEGIN__>
+   100b4:	00179713          	sll	a4,a5,0x1
+   100b8:	80e1a423          	sw	a4,-2040(gp) # 111d0 <led_pin_reg>
+   100bc:	8081a783          	lw	a5,-2040(gp) # 111d0 <led_pin_reg>
+   100c0:	00ff6f33          	or	t5,t5,a5
+   100c4:	008000ef          	jal	100cc <readpindetails>
+   100c8:	ffdff06f          	j	100c4 <main+0x30>
 
-0001008c <readpindetails>:
-   1008c:	fe010113          	add	sp,sp,-32
-   10090:	00112e23          	sw	ra,28(sp)
-   10094:	00812c23          	sw	s0,24(sp)
-   10098:	02010413          	add	s0,sp,32
-   1009c:	fe042623          	sw	zero,-20(s0)
-   100a0:	fec42783          	lw	a5,-20(s0)
-   100a4:	00179793          	sll	a5,a5,0x1
-   100a8:	fef42423          	sw	a5,-24(s0)
-   100ac:	fe842783          	lw	a5,-24(s0)
-   100b0:	00ff6f33          	or	t5,t5,a5
-   100b4:	001f7793          	and	a5,t5,1
-   100b8:	fef42223          	sw	a5,-28(s0)
-   100bc:	fe442703          	lw	a4,-28(s0)
-   100c0:	00100793          	li	a5,1
-   100c4:	02f71863          	bne	a4,a5,100f4 <readpindetails+0x68>
-   100c8:	00100793          	li	a5,1
-   100cc:	fef42623          	sw	a5,-20(s0)
-   100d0:	fec42783          	lw	a5,-20(s0)
-   100d4:	00179793          	sll	a5,a5,0x1
-   100d8:	fef42423          	sw	a5,-24(s0)
-   100dc:	fe842783          	lw	a5,-24(s0)
-   100e0:	00ff6f33          	or	t5,t5,a5
-   100e4:	000017b7          	lui	a5,0x1
-   100e8:	bb878513          	add	a0,a5,-1096 # bb8 <main-0xf4bc>
-   100ec:	034000ef          	jal	10120 <delaytime>
-   100f0:	01c0006f          	j	1010c <readpindetails+0x80>
-   100f4:	fe042623          	sw	zero,-20(s0)
-   100f8:	fec42783          	lw	a5,-20(s0)
-   100fc:	00179793          	sll	a5,a5,0x1
-   10100:	fef42423          	sw	a5,-24(s0)
-   10104:	fe842783          	lw	a5,-24(s0)
-   10108:	00ff6f33          	or	t5,t5,a5
-   1010c:	00000013          	nop
-   10110:	01c12083          	lw	ra,28(sp)
-   10114:	01812403          	lw	s0,24(sp)
-   10118:	02010113          	add	sp,sp,32
-   1011c:	00008067          	ret
+000100cc <readpindetails>:
+   100cc:	ff010113          	add	sp,sp,-16
+   100d0:	00112623          	sw	ra,12(sp)
+   100d4:	00812423          	sw	s0,8(sp)
+   100d8:	01010413          	add	s0,sp,16
+   100dc:	001f7713          	and	a4,t5,1
+   100e0:	000117b7          	lui	a5,0x11
+   100e4:	1ce7a623          	sw	a4,460(a5) # 111cc <sensor_pin>
+   100e8:	000117b7          	lui	a5,0x11
+   100ec:	1cc7a703          	lw	a4,460(a5) # 111cc <sensor_pin>
+   100f0:	00100793          	li	a5,1
+   100f4:	02f71c63          	bne	a4,a5,1012c <readpindetails+0x60>
+   100f8:	000117b7          	lui	a5,0x11
+   100fc:	00100713          	li	a4,1
+   10100:	1ce7a423          	sw	a4,456(a5) # 111c8 <__DATA_BEGIN__>
+   10104:	000117b7          	lui	a5,0x11
+   10108:	1c87a783          	lw	a5,456(a5) # 111c8 <__DATA_BEGIN__>
+   1010c:	00179713          	sll	a4,a5,0x1
+   10110:	80e1a423          	sw	a4,-2040(gp) # 111d0 <led_pin_reg>
+   10114:	8081a783          	lw	a5,-2040(gp) # 111d0 <led_pin_reg>
+   10118:	00ff6f33          	or	t5,t5,a5
+   1011c:	000017b7          	lui	a5,0x1
+   10120:	bb878513          	add	a0,a5,-1096 # bb8 <main-0xf4dc>
+   10124:	03c000ef          	jal	10160 <delaytime>
+   10128:	0240006f          	j	1014c <readpindetails+0x80>
+   1012c:	000117b7          	lui	a5,0x11
+   10130:	1c07a423          	sw	zero,456(a5) # 111c8 <__DATA_BEGIN__>
+   10134:	000117b7          	lui	a5,0x11
+   10138:	1c87a783          	lw	a5,456(a5) # 111c8 <__DATA_BEGIN__>
+   1013c:	00179713          	sll	a4,a5,0x1
+   10140:	80e1a423          	sw	a4,-2040(gp) # 111d0 <led_pin_reg>
+   10144:	8081a783          	lw	a5,-2040(gp) # 111d0 <led_pin_reg>
+   10148:	00ff6f33          	or	t5,t5,a5
+   1014c:	00000013          	nop
+   10150:	00c12083          	lw	ra,12(sp)
+   10154:	00812403          	lw	s0,8(sp)
+   10158:	01010113          	add	sp,sp,16
+   1015c:	00008067          	ret
 
-00010120 <delaytime>:
-   10120:	fd010113          	add	sp,sp,-48
-   10124:	02812623          	sw	s0,44(sp)
-   10128:	03010413          	add	s0,sp,48
-   1012c:	fca42e23          	sw	a0,-36(s0)
-   10130:	fe042623          	sw	zero,-20(s0)
-   10134:	0340006f          	j	10168 <delaytime+0x48>
-   10138:	fe042423          	sw	zero,-24(s0)
-   1013c:	0100006f          	j	1014c <delaytime+0x2c>
-   10140:	fe842783          	lw	a5,-24(s0)
-   10144:	00178793          	add	a5,a5,1
-   10148:	fef42423          	sw	a5,-24(s0)
-   1014c:	fe842703          	lw	a4,-24(s0)
-   10150:	000f47b7          	lui	a5,0xf4
-   10154:	23f78793          	add	a5,a5,575 # f423f <__global_pointer$+0xe28b7>
-   10158:	fee7d4e3          	bge	a5,a4,10140 <delaytime+0x20>
-   1015c:	fec42783          	lw	a5,-20(s0)
-   10160:	00178793          	add	a5,a5,1
-   10164:	fef42623          	sw	a5,-20(s0)
-   10168:	fec42703          	lw	a4,-20(s0)
-   1016c:	fdc42783          	lw	a5,-36(s0)
-   10170:	fcf744e3          	blt	a4,a5,10138 <delaytime+0x18>
-   10174:	00000013          	nop
-   10178:	00000013          	nop
-   1017c:	02c12403          	lw	s0,44(sp)
-   10180:	03010113          	add	sp,sp,48
-   10184:	00008067          	ret
+00010160 <delaytime>:
+   10160:	fd010113          	add	sp,sp,-48
+   10164:	02812623          	sw	s0,44(sp)
+   10168:	03010413          	add	s0,sp,48
+   1016c:	fca42e23          	sw	a0,-36(s0)
+   10170:	fe042623          	sw	zero,-20(s0)
+   10174:	0340006f          	j	101a8 <delaytime+0x48>
+   10178:	fe042423          	sw	zero,-24(s0)
+   1017c:	0100006f          	j	1018c <delaytime+0x2c>
+   10180:	fe842783          	lw	a5,-24(s0)
+   10184:	00178793          	add	a5,a5,1
+   10188:	fef42423          	sw	a5,-24(s0)
+   1018c:	fe842703          	lw	a4,-24(s0)
+   10190:	000f47b7          	lui	a5,0xf4
+   10194:	23f78793          	add	a5,a5,575 # f423f <__global_pointer$+0xe2877>
+   10198:	fee7d4e3          	bge	a5,a4,10180 <delaytime+0x20>
+   1019c:	fec42783          	lw	a5,-20(s0)
+   101a0:	00178793          	add	a5,a5,1
+   101a4:	fef42623          	sw	a5,-20(s0)
+   101a8:	fec42703          	lw	a4,-20(s0)
+   101ac:	fdc42783          	lw	a5,-36(s0)
+   101b0:	fcf744e3          	blt	a4,a5,10178 <delaytime+0x18>
+   101b4:	00000013          	nop
+   101b8:	00000013          	nop
+   101bc:	02c12403          	lw	s0,44(sp)
+   101c0:	03010113          	add	sp,sp,48
+   101c4:	00008067          	ret
 
 ```
 
@@ -227,21 +238,21 @@ The above assembly code was run on a Python script to find the different instruc
 ```
 Number of different instructions: 15
 List of unique instructions:
-add
 sw
-and
-li
-bne
-ret
-sll
-or
+nop
 lui
+or
+bge
+bne
+add
+sll
+li
+and
+jal
 j
 lw
-bge
 blt
-nop
-jal
+ret
 
 ```
 
