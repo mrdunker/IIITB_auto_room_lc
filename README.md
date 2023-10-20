@@ -203,23 +203,20 @@ The above assembly code was run on a Python script to find the different instruc
 <br />
 
 ```
-Number of different instructions: 15
+Number of different instructions: 11
 List of unique instructions:
-sw
-nop
-lui
-or
-bge
-bne
-add
-sll
-li
 and
-jal
-j
+bge
+lui
 lw
-blt
-ret
+add
+or
+sw
+li
+sll
+j
+bne
+
 
 ```
 
