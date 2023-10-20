@@ -46,15 +46,11 @@ When input from the sensor is LOW:<br />
 ## C code for the design
 
 ```
-
-int led_pin,sensor_pin,led_pin_reg;
-
-void delaytime(int);
-void readpindetails();
-
 int main()
-{   
- 
+{
+
+ int led_pin,sensor_pin,led_pin_reg,i,j,reset_high;
+
  led_pin = 0; // initialize the output pin as LOW initially
  led_pin_reg = led_pin*2;
  
@@ -66,61 +62,60 @@ int main()
 	);
 
  while(1){
-    readpindetails();
-    }
-    return 0;
-        
-}
-void readpindetails() {
-
-
-    //"Motion sensor-based room light control started"
-
-    asm volatile(
+    //Off switch- if the reset_high is low it should be off fully.
+        asm volatile(
 	"andi %0, x30, 1\n\t"
+	:"=r"(reset_high)
+	:
+	:
+	);
+    //"Motion sensor-based room light control started"
+    asm volatile(
+	"andi %0, x30, 2\n\t"
 	:"=r"(sensor_pin)
 	:
 	:
 	);
 
-        if (sensor_pin == 1) {
+        if ((sensor_pin == 1) && (reset_high ==1)) {
             // Motion detected, turn on the room light
             //digitalWrite(LIGHT_PIN, HIGH);
             //printf("Motion detected. Light turned ON.\n");
             led_pin = 1;
-            led_pin_reg = led_pin*2;
+            led_pin_reg = led_pin*4;
             asm volatile(
 		"or x30, x30, %0\n\t" 
 		:
 		:"r"(led_pin_reg)
 		:"x30"
 		);
-            delaytime(3000);// Almost 6 second delay is given
-            // You can add a delay here to control how long the light stays on
-        } else {
-            // No motion detected, turn off the room light
+		
+	// Almost 6 second delay is given
+        // You can add a delay here to control how long the light stays on
+	    for (i = 0; i < 3000; i++) {
+        	for (j = 0; j < 1000000; j++) {
+            	// Adding a loop inside to approximate seconds
+        	}
+    	    }
+    	}//end of if statement
+    	else
+    	{
+    	    //No motion detected or manual switch is off, turn off the room light
             //digitalWrite(LIGHT_PIN, LOW);
             //printf("No motion detected. Light turned OFF.\n");
             led_pin = 0;
-            led_pin_reg = led_pin*2;
+            led_pin_reg = led_pin*4;
             asm volatile(
 		"or x30, x30, %0\n\t" 
 		:
 		:"r"(led_pin_reg)
 		:"x30"
-		);
-        }
-
+		);	
+    	}//end of else statement
+    	}//end while loop
+    	
+    return 0;
 }
-void delaytime(int seconds) {
-    int i, j;
-    for (i = 0; i < seconds; i++) {
-        for (j = 0; j < 1000000; j++) {
-            // Adding a loop inside to approximate seconds
-        }
-    }
-}
-
 
 ```
 
@@ -141,93 +136,65 @@ Below codes are run on the terminal to get the assembly code.<br />
 
 ```
 
+
 out:     file format elf32-littleriscv
 
 
 Disassembly of section .text:
 
-00010094 <main>:
-   10094:	ff010113          	add	sp,sp,-16
-   10098:	00112623          	sw	ra,12(sp)
-   1009c:	00812423          	sw	s0,8(sp)
-   100a0:	01010413          	add	s0,sp,16
-   100a4:	000117b7          	lui	a5,0x11
-   100a8:	1c07a423          	sw	zero,456(a5) # 111c8 <__DATA_BEGIN__>
-   100ac:	000117b7          	lui	a5,0x11
-   100b0:	1c87a783          	lw	a5,456(a5) # 111c8 <__DATA_BEGIN__>
-   100b4:	00179713          	sll	a4,a5,0x1
-   100b8:	80e1a423          	sw	a4,-2040(gp) # 111d0 <led_pin_reg>
-   100bc:	8081a783          	lw	a5,-2040(gp) # 111d0 <led_pin_reg>
-   100c0:	00ff6f33          	or	t5,t5,a5
-   100c4:	008000ef          	jal	100cc <readpindetails>
-   100c8:	ffdff06f          	j	100c4 <main+0x30>
-
-000100cc <readpindetails>:
-   100cc:	ff010113          	add	sp,sp,-16
-   100d0:	00112623          	sw	ra,12(sp)
-   100d4:	00812423          	sw	s0,8(sp)
-   100d8:	01010413          	add	s0,sp,16
-   100dc:	001f7713          	and	a4,t5,1
-   100e0:	000117b7          	lui	a5,0x11
-   100e4:	1ce7a623          	sw	a4,460(a5) # 111cc <sensor_pin>
-   100e8:	000117b7          	lui	a5,0x11
-   100ec:	1cc7a703          	lw	a4,460(a5) # 111cc <sensor_pin>
-   100f0:	00100793          	li	a5,1
-   100f4:	02f71c63          	bne	a4,a5,1012c <readpindetails+0x60>
-   100f8:	000117b7          	lui	a5,0x11
-   100fc:	00100713          	li	a4,1
-   10100:	1ce7a423          	sw	a4,456(a5) # 111c8 <__DATA_BEGIN__>
-   10104:	000117b7          	lui	a5,0x11
-   10108:	1c87a783          	lw	a5,456(a5) # 111c8 <__DATA_BEGIN__>
-   1010c:	00179713          	sll	a4,a5,0x1
-   10110:	80e1a423          	sw	a4,-2040(gp) # 111d0 <led_pin_reg>
-   10114:	8081a783          	lw	a5,-2040(gp) # 111d0 <led_pin_reg>
-   10118:	00ff6f33          	or	t5,t5,a5
-   1011c:	000017b7          	lui	a5,0x1
-   10120:	bb878513          	add	a0,a5,-1096 # bb8 <main-0xf4dc>
-   10124:	03c000ef          	jal	10160 <delaytime>
-   10128:	0240006f          	j	1014c <readpindetails+0x80>
-   1012c:	000117b7          	lui	a5,0x11
-   10130:	1c07a423          	sw	zero,456(a5) # 111c8 <__DATA_BEGIN__>
-   10134:	000117b7          	lui	a5,0x11
-   10138:	1c87a783          	lw	a5,456(a5) # 111c8 <__DATA_BEGIN__>
-   1013c:	00179713          	sll	a4,a5,0x1
-   10140:	80e1a423          	sw	a4,-2040(gp) # 111d0 <led_pin_reg>
-   10144:	8081a783          	lw	a5,-2040(gp) # 111d0 <led_pin_reg>
-   10148:	00ff6f33          	or	t5,t5,a5
-   1014c:	00000013          	nop
-   10150:	00c12083          	lw	ra,12(sp)
-   10154:	00812403          	lw	s0,8(sp)
-   10158:	01010113          	add	sp,sp,16
-   1015c:	00008067          	ret
-
-00010160 <delaytime>:
-   10160:	fd010113          	add	sp,sp,-48
-   10164:	02812623          	sw	s0,44(sp)
-   10168:	03010413          	add	s0,sp,48
-   1016c:	fca42e23          	sw	a0,-36(s0)
-   10170:	fe042623          	sw	zero,-20(s0)
-   10174:	0340006f          	j	101a8 <delaytime+0x48>
-   10178:	fe042423          	sw	zero,-24(s0)
-   1017c:	0100006f          	j	1018c <delaytime+0x2c>
-   10180:	fe842783          	lw	a5,-24(s0)
-   10184:	00178793          	add	a5,a5,1
-   10188:	fef42423          	sw	a5,-24(s0)
-   1018c:	fe842703          	lw	a4,-24(s0)
-   10190:	000f47b7          	lui	a5,0xf4
-   10194:	23f78793          	add	a5,a5,575 # f423f <__global_pointer$+0xe2877>
-   10198:	fee7d4e3          	bge	a5,a4,10180 <delaytime+0x20>
-   1019c:	fec42783          	lw	a5,-20(s0)
-   101a0:	00178793          	add	a5,a5,1
-   101a4:	fef42623          	sw	a5,-20(s0)
-   101a8:	fec42703          	lw	a4,-20(s0)
-   101ac:	fdc42783          	lw	a5,-36(s0)
-   101b0:	fcf744e3          	blt	a4,a5,10178 <delaytime+0x18>
-   101b4:	00000013          	nop
-   101b8:	00000013          	nop
-   101bc:	02c12403          	lw	s0,44(sp)
-   101c0:	03010113          	add	sp,sp,48
-   101c4:	00008067          	ret
+00010074 <main>:
+   10074:	fd010113          	add	sp,sp,-48
+   10078:	02812623          	sw	s0,44(sp)
+   1007c:	03010413          	add	s0,sp,48
+   10080:	fe042223          	sw	zero,-28(s0)
+   10084:	fe442783          	lw	a5,-28(s0)
+   10088:	00179793          	sll	a5,a5,0x1
+   1008c:	fef42023          	sw	a5,-32(s0)
+   10090:	fe042783          	lw	a5,-32(s0)
+   10094:	00ff6f33          	or	t5,t5,a5
+   10098:	001f7793          	and	a5,t5,1
+   1009c:	fcf42e23          	sw	a5,-36(s0)
+   100a0:	002f7793          	and	a5,t5,2
+   100a4:	fcf42c23          	sw	a5,-40(s0)
+   100a8:	fd842703          	lw	a4,-40(s0)
+   100ac:	00100793          	li	a5,1
+   100b0:	06f71c63          	bne	a4,a5,10128 <main+0xb4>
+   100b4:	fdc42703          	lw	a4,-36(s0)
+   100b8:	00100793          	li	a5,1
+   100bc:	06f71663          	bne	a4,a5,10128 <main+0xb4>
+   100c0:	00100793          	li	a5,1
+   100c4:	fef42223          	sw	a5,-28(s0)
+   100c8:	fe442783          	lw	a5,-28(s0)
+   100cc:	00279793          	sll	a5,a5,0x2
+   100d0:	fef42023          	sw	a5,-32(s0)
+   100d4:	fe042783          	lw	a5,-32(s0)
+   100d8:	00ff6f33          	or	t5,t5,a5
+   100dc:	fe042623          	sw	zero,-20(s0)
+   100e0:	0340006f          	j	10114 <main+0xa0>
+   100e4:	fe042423          	sw	zero,-24(s0)
+   100e8:	0100006f          	j	100f8 <main+0x84>
+   100ec:	fe842783          	lw	a5,-24(s0)
+   100f0:	00178793          	add	a5,a5,1
+   100f4:	fef42423          	sw	a5,-24(s0)
+   100f8:	fe842703          	lw	a4,-24(s0)
+   100fc:	000f47b7          	lui	a5,0xf4
+   10100:	23f78793          	add	a5,a5,575 # f423f <__global_pointer$+0xe28fb>
+   10104:	fee7d4e3          	bge	a5,a4,100ec <main+0x78>
+   10108:	fec42783          	lw	a5,-20(s0)
+   1010c:	00178793          	add	a5,a5,1
+   10110:	fef42623          	sw	a5,-20(s0)
+   10114:	fec42703          	lw	a4,-20(s0)
+   10118:	000017b7          	lui	a5,0x1
+   1011c:	bb778793          	add	a5,a5,-1097 # bb7 <main-0xf4bd>
+   10120:	fce7d2e3          	bge	a5,a4,100e4 <main+0x70>
+   10124:	01c0006f          	j	10140 <main+0xcc>
+   10128:	fe042223          	sw	zero,-28(s0)
+   1012c:	fe442783          	lw	a5,-28(s0)
+   10130:	00279793          	sll	a5,a5,0x2
+   10134:	fef42023          	sw	a5,-32(s0)
+   10138:	fe042783          	lw	a5,-32(s0)
+   1013c:	00ff6f33          	or	t5,t5,a5
+   10140:	f59ff06f          	j	10098 <main+0x24>
 
 ```
 
