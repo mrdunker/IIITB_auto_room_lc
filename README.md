@@ -117,6 +117,7 @@ int main()
     return 0;
 }
 
+
 ```
 
 ## Assembly code conversion
@@ -136,65 +137,64 @@ Below codes are run on the terminal to get the assembly code.<br />
 
 ```
 
-
 out:     file format elf32-littleriscv
 
 
 Disassembly of section .text:
 
-00010074 <main>:
-   10074:	fd010113          	add	sp,sp,-48
-   10078:	02812623          	sw	s0,44(sp)
-   1007c:	03010413          	add	s0,sp,48
-   10080:	fe042223          	sw	zero,-28(s0)
-   10084:	fe442783          	lw	a5,-28(s0)
-   10088:	00179793          	sll	a5,a5,0x1
-   1008c:	fef42023          	sw	a5,-32(s0)
-   10090:	fe042783          	lw	a5,-32(s0)
-   10094:	00ff6f33          	or	t5,t5,a5
-   10098:	001f7793          	and	a5,t5,1
-   1009c:	fcf42e23          	sw	a5,-36(s0)
-   100a0:	002f7793          	and	a5,t5,2
-   100a4:	fcf42c23          	sw	a5,-40(s0)
-   100a8:	fd842703          	lw	a4,-40(s0)
-   100ac:	00100793          	li	a5,1
-   100b0:	06f71c63          	bne	a4,a5,10128 <main+0xb4>
-   100b4:	fdc42703          	lw	a4,-36(s0)
-   100b8:	00100793          	li	a5,1
-   100bc:	06f71663          	bne	a4,a5,10128 <main+0xb4>
-   100c0:	00100793          	li	a5,1
-   100c4:	fef42223          	sw	a5,-28(s0)
-   100c8:	fe442783          	lw	a5,-28(s0)
-   100cc:	00279793          	sll	a5,a5,0x2
-   100d0:	fef42023          	sw	a5,-32(s0)
-   100d4:	fe042783          	lw	a5,-32(s0)
-   100d8:	00ff6f33          	or	t5,t5,a5
-   100dc:	fe042623          	sw	zero,-20(s0)
-   100e0:	0340006f          	j	10114 <main+0xa0>
-   100e4:	fe042423          	sw	zero,-24(s0)
-   100e8:	0100006f          	j	100f8 <main+0x84>
-   100ec:	fe842783          	lw	a5,-24(s0)
-   100f0:	00178793          	add	a5,a5,1
-   100f4:	fef42423          	sw	a5,-24(s0)
-   100f8:	fe842703          	lw	a4,-24(s0)
-   100fc:	000f47b7          	lui	a5,0xf4
-   10100:	23f78793          	add	a5,a5,575 # f423f <__global_pointer$+0xe28fb>
-   10104:	fee7d4e3          	bge	a5,a4,100ec <main+0x78>
-   10108:	fec42783          	lw	a5,-20(s0)
-   1010c:	00178793          	add	a5,a5,1
-   10110:	fef42623          	sw	a5,-20(s0)
-   10114:	fec42703          	lw	a4,-20(s0)
-   10118:	000017b7          	lui	a5,0x1
-   1011c:	bb778793          	add	a5,a5,-1097 # bb7 <main-0xf4bd>
-   10120:	fce7d2e3          	bge	a5,a4,100e4 <main+0x70>
-   10124:	01c0006f          	j	10140 <main+0xcc>
-   10128:	fe042223          	sw	zero,-28(s0)
-   1012c:	fe442783          	lw	a5,-28(s0)
-   10130:	00279793          	sll	a5,a5,0x2
-   10134:	fef42023          	sw	a5,-32(s0)
-   10138:	fe042783          	lw	a5,-32(s0)
-   1013c:	00ff6f33          	or	t5,t5,a5
-   10140:	f59ff06f          	j	10098 <main+0x24>
+00010054 <main>:
+   10054:	fd010113          	addi	sp,sp,-48
+   10058:	02812623          	sw	s0,44(sp)
+   1005c:	03010413          	addi	s0,sp,48
+   10060:	fe042223          	sw	zero,-28(s0)
+   10064:	fe442783          	lw	a5,-28(s0)
+   10068:	00179793          	slli	a5,a5,0x1
+   1006c:	fef42023          	sw	a5,-32(s0)
+   10070:	fe042783          	lw	a5,-32(s0)
+   10074:	00ff6f33          	or	t5,t5,a5
+   10078:	001f7793          	andi	a5,t5,1
+   1007c:	fcf42e23          	sw	a5,-36(s0)
+   10080:	002f7793          	andi	a5,t5,2
+   10084:	fcf42c23          	sw	a5,-40(s0)
+   10088:	fd842703          	lw	a4,-40(s0)
+   1008c:	00100793          	li	a5,1
+   10090:	06f71c63          	bne	a4,a5,10108 <main+0xb4>
+   10094:	fdc42703          	lw	a4,-36(s0)
+   10098:	00100793          	li	a5,1
+   1009c:	06f71663          	bne	a4,a5,10108 <main+0xb4>
+   100a0:	00100793          	li	a5,1
+   100a4:	fef42223          	sw	a5,-28(s0)
+   100a8:	fe442783          	lw	a5,-28(s0)
+   100ac:	00279793          	slli	a5,a5,0x2
+   100b0:	fef42023          	sw	a5,-32(s0)
+   100b4:	fe042783          	lw	a5,-32(s0)
+   100b8:	00ff6f33          	or	t5,t5,a5
+   100bc:	fe042623          	sw	zero,-20(s0)
+   100c0:	0340006f          	j	100f4 <main+0xa0>
+   100c4:	fe042423          	sw	zero,-24(s0)
+   100c8:	0100006f          	j	100d8 <main+0x84>
+   100cc:	fe842783          	lw	a5,-24(s0)
+   100d0:	00178793          	addi	a5,a5,1
+   100d4:	fef42423          	sw	a5,-24(s0)
+   100d8:	fe842703          	lw	a4,-24(s0)
+   100dc:	000f47b7          	lui	a5,0xf4
+   100e0:	23f78793          	addi	a5,a5,575 # f423f <__global_pointer$+0xe291b>
+   100e4:	fee7d4e3          	bge	a5,a4,100cc <main+0x78>
+   100e8:	fec42783          	lw	a5,-20(s0)
+   100ec:	00178793          	addi	a5,a5,1
+   100f0:	fef42623          	sw	a5,-20(s0)
+   100f4:	fec42703          	lw	a4,-20(s0)
+   100f8:	000017b7          	lui	a5,0x1
+   100fc:	bb778793          	addi	a5,a5,-1097 # bb7 <main-0xf49d>
+   10100:	fce7d2e3          	bge	a5,a4,100c4 <main+0x70>
+   10104:	01c0006f          	j	10120 <main+0xcc>
+   10108:	fe042223          	sw	zero,-28(s0)
+   1010c:	fe442783          	lw	a5,-28(s0)
+   10110:	00279793          	slli	a5,a5,0x2
+   10114:	fef42023          	sw	a5,-32(s0)
+   10118:	fe042783          	lw	a5,-32(s0)
+   1011c:	00ff6f33          	or	t5,t5,a5
+   10120:	f59ff06f          	j	10078 <main+0x24>
 
 ```
 
@@ -205,18 +205,17 @@ The above assembly code was run on a Python script to find the different instruc
 ```
 Number of different instructions: 11
 List of unique instructions:
-and
-bge
-lui
-lw
-add
-or
+addi
 sw
 li
-sll
-j
 bne
-
+slli
+lw
+or
+bge
+andi
+j
+lui
 
 ```
 
