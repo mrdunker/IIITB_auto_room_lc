@@ -127,9 +127,9 @@ The above C program is compiled using the RISC-V GNU toolchain and the assembly 
 Below codes are run on the terminal to get the assembly code.<br />
 
 ```
-/home/emil/riscv32-toolchain/bin/riscv32-unknown-elf-gcc -mabi=ilp32 -march=rv32i -ffreestanding -nostdlib -o ./out motion.c
+riscv64-unknown-elf-gcc -mabi=ilp32 -march=rv32i -ffreestanding -nostdlib -o ./out motion.c 
+riscv64-unknown-elf-objdump -d -r out > asm.txt
 
-/home/emil/riscv32-toolchain/bin/riscv32-unknown-elf-objdump -d -r out > motion_assembly.txt
 ```
 
 
