@@ -1,19 +1,32 @@
+/*
+#include<stdio.h>
+#include<stdlib.h>
+*/
 int main()
 {
 
  int led_pin,sensor_pin,led_pin_reg,i,j,reset_high;
-
+ int mask1 = 0xFFFFFFFB;
  led_pin = 0; // initialize the output pin as LOW initially
- led_pin_reg = led_pin*2;
+ led_pin_reg = led_pin*4;
  
-    asm volatile(
+ 
+    /*asm volatile(
 	"or x30, x30, %0\n\t" 
 	:
 	:"r"(led_pin_reg)
 	:"x30"
-	);
-
- while(1){
+	);*/
+	asm volatile(
+	"and x30, x30, %1\n\t"
+        "or x30, x30, %0\n\t"
+        :
+        : "r"(led_pin_reg), "r"(mask1)
+        : "x30"
+        );	
+//for(int z=0;z<1;z++)
+while(1)
+ {
     //Off switch- if the reset_high is low it should be off fully.
         asm volatile(
 	"andi %0, x30, 1\n\t"
@@ -28,6 +41,8 @@ int main()
 	:
 	:
 	);
+	//sensor_pin=1;
+	//reset_high=1;
 
         if ((sensor_pin == 1) && (reset_high ==1)) {
             // Motion detected, turn on the room light
@@ -35,17 +50,27 @@ int main()
             //printf("Motion detected. Light turned ON.\n");
             led_pin = 1;
             led_pin_reg = led_pin*4;
-            asm volatile(
+            /*asm volatile(
 		"or x30, x30, %0\n\t" 
 		:
 		:"r"(led_pin_reg)
 		:"x30"
-		);
+		);*/
+		
+		asm volatile(
+		"and x30, x30, %1\n\t"
+        	"or x30, x30, %0\n\t"
+        	:
+        	: "r"(led_pin_reg), "r"(mask1)
+        	: "x30"
+        	);
+	    
+	
 		
 	// Almost 6 second delay is given
         // You can add a delay here to control how long the light stays on
 	    for (i = 0; i < 3000; i++) {
-        	for (j = 0; j < 1000000; j++) {
+        	for (j = 0; j < 100000; j++) {
             	// Adding a loop inside to approximate seconds
         	}
     	    }
@@ -57,12 +82,19 @@ int main()
             //printf("No motion detected. Light turned OFF.\n");
             led_pin = 0;
             led_pin_reg = led_pin*4;
-            asm volatile(
+            /*asm volatile(
 		"or x30, x30, %0\n\t" 
 		:
 		:"r"(led_pin_reg)
 		:"x30"
-		);	
+		);*/
+		asm volatile(
+		"and x30, x30, %1\n\t"
+        	"or x30, x30, %0\n\t"
+        	:
+        	: "r"(led_pin_reg), "r"(mask1)
+        	: "x30"
+        	);	
     	}//end of else statement
     	}//end while loop
     	
