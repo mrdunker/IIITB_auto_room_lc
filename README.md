@@ -35,7 +35,7 @@ gcc motion.c
 <br />
 
 The following output is observed.<br />
-When input from the sensor is HIGH:<br />
+When input from the sensor and main switch are both HIGH:<br />
 ![Screenshot from 2023-10-03 11-20-58](https://github.com/mrdunker/IIITB_home_aa_proximity/assets/38190245/671b40bf-3639-4f5c-a90a-965b181e8bdf)
 <br />
 
@@ -254,6 +254,29 @@ and
 bge
 
 ```
+
+Now spike simulation is done using following commands.<br />
+
+```
+riscv64-unknown-elf-gcc -march=rv64i -mabi=lp64 -ffreestanding -o out motion.c
+spike pk out
+
+```
+For Both Main Switch and Sensor **HIGH** the Spike simulation output is shown as below :<br />
+
+![Screenshot from 2023-10-25 00-13-23](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/f63e157f-8fca-4116-b4e8-95b87e767420)
+
+
+If Main supply is **ON** and Sensor is **LOW** :<br />
+
+![Screenshot from 2023-10-25 00-15-18](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/f3e0142c-3e4e-46c6-823b-f18cf343eff4)
+
+The other two test cases are shown below :<br />
+
+![Screenshot from 2023-10-25 00-14-30](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/3dc3e70a-052d-4404-a56d-fb369bc446b5)
+
+![Screenshot from 2023-10-25 00-15-44](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/3cf7b5ed-43ad-4735-9ac1-1ff216b5f679)
+
 
 ## Acknowledgement
 
