@@ -50,18 +50,27 @@ int main()
 {
 
  int led_pin,sensor_pin,led_pin_reg,i,j,reset_high;
-
+ int mask1 = 0xFFFFFFFB;
  led_pin = 0; // initialize the output pin as LOW initially
- led_pin_reg = led_pin*2;
+ led_pin_reg = led_pin*4;
  
-    asm volatile(
+ 
+    /*asm volatile(
 	"or x30, x30, %0\n\t" 
 	:
 	:"r"(led_pin_reg)
 	:"x30"
-	);
-
- while(1){
+	);*/
+	asm volatile(
+	"and x30, x30, %1\n\t"
+        "or x30, x30, %0\n\t"
+        :
+        : "r"(led_pin_reg), "r"(mask1)
+        : "x30"
+        );	
+//for(int z=0;z<1;z++)
+while(1)
+ {
     //Off switch- if the reset_high is low it should be off fully.
         asm volatile(
 	"andi %0, x30, 1\n\t"
@@ -76,6 +85,8 @@ int main()
 	:
 	:
 	);
+	//sensor_pin=1;
+	//reset_high=1;
 
         if ((sensor_pin == 1) && (reset_high ==1)) {
             // Motion detected, turn on the room light
@@ -83,17 +94,27 @@ int main()
             //printf("Motion detected. Light turned ON.\n");
             led_pin = 1;
             led_pin_reg = led_pin*4;
-            asm volatile(
+            /*asm volatile(
 		"or x30, x30, %0\n\t" 
 		:
 		:"r"(led_pin_reg)
 		:"x30"
-		);
+		);*/
+		
+		asm volatile(
+		"and x30, x30, %1\n\t"
+        	"or x30, x30, %0\n\t"
+        	:
+        	: "r"(led_pin_reg), "r"(mask1)
+        	: "x30"
+        	);
+	    
+	
 		
 	// Almost 6 second delay is given
         // You can add a delay here to control how long the light stays on
 	    for (i = 0; i < 3000; i++) {
-        	for (j = 0; j < 1000000; j++) {
+        	for (j = 0; j < 100000; j++) {
             	// Adding a loop inside to approximate seconds
         	}
     	    }
@@ -105,18 +126,24 @@ int main()
             //printf("No motion detected. Light turned OFF.\n");
             led_pin = 0;
             led_pin_reg = led_pin*4;
-            asm volatile(
+            /*asm volatile(
 		"or x30, x30, %0\n\t" 
 		:
 		:"r"(led_pin_reg)
 		:"x30"
-		);	
+		);*/
+		asm volatile(
+		"and x30, x30, %1\n\t"
+        	"or x30, x30, %0\n\t"
+        	:
+        	: "r"(led_pin_reg), "r"(mask1)
+        	: "x30"
+        	);	
     	}//end of else statement
     	}//end while loop
     	
     return 0;
 }
-
 
 ```
 
@@ -146,55 +173,63 @@ Disassembly of section .text:
    10054:	fd010113          	addi	sp,sp,-48
    10058:	02812623          	sw	s0,44(sp)
    1005c:	03010413          	addi	s0,sp,48
-   10060:	fe042223          	sw	zero,-28(s0)
-   10064:	fe442783          	lw	a5,-28(s0)
-   10068:	00179793          	slli	a5,a5,0x1
-   1006c:	fef42023          	sw	a5,-32(s0)
-   10070:	fe042783          	lw	a5,-32(s0)
-   10074:	00ff6f33          	or	t5,t5,a5
-   10078:	001f7793          	andi	a5,t5,1
-   1007c:	fcf42e23          	sw	a5,-36(s0)
-   10080:	002f7793          	andi	a5,t5,2
-   10084:	fcf42c23          	sw	a5,-40(s0)
-   10088:	fd842703          	lw	a4,-40(s0)
-   1008c:	00100793          	li	a5,1
-   10090:	06f71c63          	bne	a4,a5,10108 <main+0xb4>
-   10094:	fdc42703          	lw	a4,-36(s0)
-   10098:	00100793          	li	a5,1
-   1009c:	06f71663          	bne	a4,a5,10108 <main+0xb4>
-   100a0:	00100793          	li	a5,1
-   100a4:	fef42223          	sw	a5,-28(s0)
-   100a8:	fe442783          	lw	a5,-28(s0)
-   100ac:	00279793          	slli	a5,a5,0x2
-   100b0:	fef42023          	sw	a5,-32(s0)
-   100b4:	fe042783          	lw	a5,-32(s0)
-   100b8:	00ff6f33          	or	t5,t5,a5
-   100bc:	fe042623          	sw	zero,-20(s0)
-   100c0:	0340006f          	j	100f4 <main+0xa0>
-   100c4:	fe042423          	sw	zero,-24(s0)
-   100c8:	0100006f          	j	100d8 <main+0x84>
-   100cc:	fe842783          	lw	a5,-24(s0)
-   100d0:	00178793          	addi	a5,a5,1
-   100d4:	fef42423          	sw	a5,-24(s0)
-   100d8:	fe842703          	lw	a4,-24(s0)
-   100dc:	000f47b7          	lui	a5,0xf4
-   100e0:	23f78793          	addi	a5,a5,575 # f423f <__global_pointer$+0xe291b>
-   100e4:	fee7d4e3          	bge	a5,a4,100cc <main+0x78>
-   100e8:	fec42783          	lw	a5,-20(s0)
-   100ec:	00178793          	addi	a5,a5,1
-   100f0:	fef42623          	sw	a5,-20(s0)
-   100f4:	fec42703          	lw	a4,-20(s0)
-   100f8:	000017b7          	lui	a5,0x1
-   100fc:	bb778793          	addi	a5,a5,-1097 # bb7 <main-0xf49d>
-   10100:	fce7d2e3          	bge	a5,a4,100c4 <main+0x70>
-   10104:	01c0006f          	j	10120 <main+0xcc>
-   10108:	fe042223          	sw	zero,-28(s0)
-   1010c:	fe442783          	lw	a5,-28(s0)
-   10110:	00279793          	slli	a5,a5,0x2
-   10114:	fef42023          	sw	a5,-32(s0)
-   10118:	fe042783          	lw	a5,-32(s0)
-   1011c:	00ff6f33          	or	t5,t5,a5
-   10120:	f59ff06f          	j	10078 <main+0x24>
+   10060:	ffb00793          	li	a5,-5
+   10064:	fef42223          	sw	a5,-28(s0)
+   10068:	fe042023          	sw	zero,-32(s0)
+   1006c:	fe042783          	lw	a5,-32(s0)
+   10070:	00279793          	slli	a5,a5,0x2
+   10074:	fcf42e23          	sw	a5,-36(s0)
+   10078:	fdc42783          	lw	a5,-36(s0)
+   1007c:	fe442703          	lw	a4,-28(s0)
+   10080:	00ef7f33          	and	t5,t5,a4
+   10084:	00ff6f33          	or	t5,t5,a5
+   10088:	001f7793          	andi	a5,t5,1
+   1008c:	fcf42c23          	sw	a5,-40(s0)
+   10090:	002f7793          	andi	a5,t5,2
+   10094:	fcf42a23          	sw	a5,-44(s0)
+   10098:	fd442703          	lw	a4,-44(s0)
+   1009c:	00100793          	li	a5,1
+   100a0:	08f71063          	bne	a4,a5,10120 <main+0xcc>
+   100a4:	fd842703          	lw	a4,-40(s0)
+   100a8:	00100793          	li	a5,1
+   100ac:	06f71a63          	bne	a4,a5,10120 <main+0xcc>
+   100b0:	00100793          	li	a5,1
+   100b4:	fef42023          	sw	a5,-32(s0)
+   100b8:	fe042783          	lw	a5,-32(s0)
+   100bc:	00279793          	slli	a5,a5,0x2
+   100c0:	fcf42e23          	sw	a5,-36(s0)
+   100c4:	fdc42783          	lw	a5,-36(s0)
+   100c8:	fe442703          	lw	a4,-28(s0)
+   100cc:	00ef7f33          	and	t5,t5,a4
+   100d0:	00ff6f33          	or	t5,t5,a5
+   100d4:	fe042623          	sw	zero,-20(s0)
+   100d8:	0340006f          	j	1010c <main+0xb8>
+   100dc:	fe042423          	sw	zero,-24(s0)
+   100e0:	0100006f          	j	100f0 <main+0x9c>
+   100e4:	fe842783          	lw	a5,-24(s0)
+   100e8:	00178793          	addi	a5,a5,1
+   100ec:	fef42423          	sw	a5,-24(s0)
+   100f0:	fe842703          	lw	a4,-24(s0)
+   100f4:	000187b7          	lui	a5,0x18
+   100f8:	69f78793          	addi	a5,a5,1695 # 1869f <__global_pointer$+0x6d5b>
+   100fc:	fee7d4e3          	bge	a5,a4,100e4 <main+0x90>
+   10100:	fec42783          	lw	a5,-20(s0)
+   10104:	00178793          	addi	a5,a5,1
+   10108:	fef42623          	sw	a5,-20(s0)
+   1010c:	fec42703          	lw	a4,-20(s0)
+   10110:	000017b7          	lui	a5,0x1
+   10114:	bb778793          	addi	a5,a5,-1097 # bb7 <main-0xf49d>
+   10118:	fce7d2e3          	bge	a5,a4,100dc <main+0x88>
+   1011c:	0240006f          	j	10140 <main+0xec>
+   10120:	fe042023          	sw	zero,-32(s0)
+   10124:	fe042783          	lw	a5,-32(s0)
+   10128:	00279793          	slli	a5,a5,0x2
+   1012c:	fcf42e23          	sw	a5,-36(s0)
+   10130:	fdc42783          	lw	a5,-36(s0)
+   10134:	fe442703          	lw	a4,-28(s0)
+   10138:	00ef7f33          	and	t5,t5,a4
+   1013c:	00ff6f33          	or	t5,t5,a5
+   10140:	f49ff06f          	j	10088 <main+0x34>
 
 ```
 
@@ -203,19 +238,20 @@ The above assembly code was run on a Python script to find the different instruc
 <br />
 
 ```
-Number of different instructions: 11
+Number of different instructions: 12
 List of unique instructions:
+slli
 addi
+lw
 sw
+or
+lui
 li
 bne
-slli
-lw
-or
-bge
 andi
 j
-lui
+and
+bge
 
 ```
 
