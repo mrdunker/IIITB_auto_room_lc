@@ -48,15 +48,9 @@ while(1)
         	: "r"(led_pin_reg), "r"(mask1)
         	: "x30"
         	);
-	    
-	
-		
-	// Almost 6 second delay is given
-        // You can add a delay here to control how long the light stays on
-	    for (i = 0; i < 3000; i++) {
-        	for (j = 0; j < 100000; j++) {
-            	// Adding a loop inside to approximate seconds
-        	}
+	    // You can add a delay here to control how long the light stays on
+	    for (i = 0; i < 100; i++) {
+        	
     	    }
     	}//end of if statement
     	else
