@@ -246,24 +246,22 @@ spike pk out
 
 ```
 
-Here We have **two inputs** and only **one output**, so there are only **four** test cases and out of those four only **one** of them will result in the output being high and in the rest of the three cases, the output is expected as low.For the sake of simulation in spice we are not using an infinite loop but just one iteration.<br />
+Here, We have **two inputs** and only **one output**, so there are only **four** test cases and out of those four only **one** of them will result in the output being high and in the rest of the three cases, the output is expected as low.For the sake of simulation in spice we are not using an infinite loop but just one iteration of it.<br />
 For spike simulation, the two inputs are hard coded for the four test cases.<br />
 
 ### For Both Main Switch and Sensor **HIGH** the Spike simulation output is shown below:
 This is the only case in which output is of a High value.<br />
 
-![Screenshot from 2023-10-25 12-19-22](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/00abeac7-7cc1-47ec-be8e-da0a9c1549b0)
+![Screenshot from 2023-10-25 15-11-07](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/00767b2b-64dd-4495-bce0-1b5a6a5f8e87)
 
 ### When Main supply is **ON** and Sensor is **LOW** :
-
-![Screenshot from 2023-10-25 00-15-18](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/f3e0142c-3e4e-46c6-823b-f18cf343eff4)
+In this case the Output is shown LOW as there is no motion sensed and input sensor is LOW.<br />
+![Screenshot from 2023-10-25 15-11-53](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/700a21b7-1bdc-45b7-97c3-b415e7ae0834)
 
 ### Remaining two test cases where the main switch is **OFF** are shown below:
-
-![Screenshot from 2023-10-25 00-14-30](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/3dc3e70a-052d-4404-a56d-fb369bc446b5)
-
-![Screenshot from 2023-10-25 00-15-44](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/3cf7b5ed-43ad-4735-9ac1-1ff216b5f679)
-
+In these two cases the main switch is OFF so by default regardless of input sensor output will stay LOW.<br />
+![Screenshot from 2023-10-25 15-12-38](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/95be1cb3-b8fa-4284-94a5-b853a0912257)
+![Screenshot from 2023-10-25 15-13-05](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/ec0880fa-0367-4274-9ace-482b9420bfda)
 
 ## Acknowledgement
 
