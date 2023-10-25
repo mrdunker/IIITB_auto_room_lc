@@ -34,7 +34,7 @@ gcc motion.c
 ```
 <br />
 
-The following output is observed.<br />
+The following output is observed after doing GCC compilation.<br />
 When input from the sensor and main switch are both HIGH:<br />
 ![Screenshot from 2023-10-03 11-20-58](https://github.com/mrdunker/IIITB_home_aa_proximity/assets/38190245/671b40bf-3639-4f5c-a90a-965b181e8bdf)
 <br />
@@ -46,6 +46,7 @@ When input from the sensor is LOW:<br />
 ## C code for the design
 
 ```
+
 int main()
 {
 
@@ -54,13 +55,6 @@ int main()
  led_pin = 0; // initialize the output pin as LOW initially
  led_pin_reg = led_pin*4;
  
- 
-    /*asm volatile(
-	"or x30, x30, %0\n\t" 
-	:
-	:"r"(led_pin_reg)
-	:"x30"
-	);*/
 	asm volatile(
 	"and x30, x30, %1\n\t"
         "or x30, x30, %0\n\t"
@@ -93,13 +87,6 @@ while(1)
             //digitalWrite(LIGHT_PIN, HIGH);
             //printf("Motion detected. Light turned ON.\n");
             led_pin = 1;
-            led_pin_reg = led_pin*4;
-            /*asm volatile(
-		"or x30, x30, %0\n\t" 
-		:
-		:"r"(led_pin_reg)
-		:"x30"
-		);*/
 		
 		asm volatile(
 		"and x30, x30, %1\n\t"
@@ -126,12 +113,7 @@ while(1)
             //printf("No motion detected. Light turned OFF.\n");
             led_pin = 0;
             led_pin_reg = led_pin*4;
-            /*asm volatile(
-		"or x30, x30, %0\n\t" 
-		:
-		:"r"(led_pin_reg)
-		:"x30"
-		);*/
+
 		asm volatile(
 		"and x30, x30, %1\n\t"
         	"or x30, x30, %0\n\t"
@@ -262,16 +244,21 @@ riscv64-unknown-elf-gcc -march=rv64i -mabi=lp64 -ffreestanding -o out motion.c
 spike pk out
 
 ```
-For Both Main Switch and Sensor **HIGH** the Spike simulation output is shown as below :<br />
 
-![Screenshot from 2023-10-25 00-13-23](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/f63e157f-8fca-4116-b4e8-95b87e767420)
+Here We have two inputs and only one output,so there are only four test cases and out of those four only one of them will result in output being high and in rest three cases the output is expected as low.<br />
+For spike simulation, the two inputs are hardcoded for the four test cases.<br />
 
+For Both Main Switch and Sensor **HIGH** the Spike simulation output is shown below:<br />
+
+This is the only case in which output is of a High value.<br />
+
+![Screenshot from 2023-10-25 12-19-22](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/00abeac7-7cc1-47ec-be8e-da0a9c1549b0)
 
 If Main supply is **ON** and Sensor is **LOW** :<br />
 
 ![Screenshot from 2023-10-25 00-15-18](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/f3e0142c-3e4e-46c6-823b-f18cf343eff4)
 
-The other two test cases are shown below :<br />
+The other two test cases where the main switch is **OFF** are shown below:<br />
 
 ![Screenshot from 2023-10-25 00-14-30](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/3dc3e70a-052d-4404-a56d-fb369bc446b5)
 
