@@ -9,7 +9,7 @@ This project aims to create a system for the automation of appliances in a room 
 
 ## Requirement
 
-Here we will be using a PIR sensor. A passive infrared sensor (PIR sensor) is an electronic sensor that measures infrared (IR) light radiating from objects in its field of view. They are most often used in PIR-based motion detectors. This will detect the presence of any individuals in the vicinity. If yes our board is programmed to turn on the light(s) in a defined space. If not it will turn OFF automatically.Also putting an off Switch to the system.
+Here we will be using a PIR sensor. A passive infrared sensor (PIR sensor) is an electronic sensor that measures infrared (IR) light radiating from objects in its field of view. They are most often used in PIR-based motion detectors. This will detect the presence of any individuals in the vicinity. If yes our board is programmed to turn on the light(s) in a defined space. If not it will turn OFF automatically. Also, we are using putting an **ON-OFF main switch** for the system.
 
 ## Block Diagram
 
@@ -237,6 +237,8 @@ bge
 
 ```
 
+## Spike Simulation
+
 Now spike simulation is done using following commands.<br />
 
 ```
@@ -245,20 +247,19 @@ spike pk out
 
 ```
 
-Here We have two inputs and only one output,so there are only four test cases and out of those four only one of them will result in output being high and in rest three cases the output is expected as low.<br />
-For spike simulation, the two inputs are hardcoded for the four test cases.<br />
+Here We have **two inputs** and only **one output**, so there are only **four** test cases and out of those four only **one** of them will result in the output being high and in the rest of the three cases, the output is expected as low.<br />
+For spike simulation, the two inputs are hard coded for the four test cases.<br />
 
-For Both Main Switch and Sensor **HIGH** the Spike simulation output is shown below:<br />
-
+### For Both Main Switch and Sensor **HIGH** the Spike simulation output is shown below:
 This is the only case in which output is of a High value.<br />
 
 ![Screenshot from 2023-10-25 12-19-22](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/00abeac7-7cc1-47ec-be8e-da0a9c1549b0)
 
-If Main supply is **ON** and Sensor is **LOW** :<br />
+### When Main supply is **ON** and Sensor is **LOW** :
 
 ![Screenshot from 2023-10-25 00-15-18](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/f3e0142c-3e4e-46c6-823b-f18cf343eff4)
 
-The other two test cases where the main switch is **OFF** are shown below:<br />
+### Remaining two test cases where the main switch is **OFF** are shown below:
 
 ![Screenshot from 2023-10-25 00-14-30](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/3dc3e70a-052d-4404-a56d-fb369bc446b5)
 
