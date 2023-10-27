@@ -233,7 +233,7 @@ Here, We have **two inputs** and only **one output**, so there are only **four**
 For spike simulation, the two inputs are hard coded for the four test cases.<br />
 
 ### For Both Main Switch and Sensor **HIGH** the Spike simulation output is shown below:
-This is the only case in which output is of a High value.<br />
+This is the only case in which output is of a High value.There are very small logic LOWs in the output high due to the masking we have done.<br />
 
 ![Screenshot from 2023-10-25 15-11-07](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/00767b2b-64dd-4495-bce0-1b5a6a5f8e87)
 
@@ -245,6 +245,24 @@ In this case the Output is shown LOW as there is no motion sensed and input sens
 In these two cases the main switch is OFF so by default regardless of input sensor output will stay LOW.<br />
 ![Screenshot from 2023-10-25 15-12-38](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/95be1cb3-b8fa-4284-94a5-b853a0912257)
 ![Screenshot from 2023-10-25 15-13-05](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/ec0880fa-0367-4274-9ace-482b9420bfda)
+
+## Functional Verification on GTKWave
+
+Since the core is generated we have to check for the functionality in GTKwave. Nessasary modifications must be made in the testbench and the following observations were made.<br />
+
+### The below screenshot shows the only case where in output will be high
+i.e if both the input pins be high the output will be high.The delay in the output is due to a delay given in the testbench.<br />
+
+![Screenshot from 2023-10-27 14-11-34](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/ae80f687-0bad-4ef8-be25-a1e8dd72dd60)
+
+### The below screenshots are of mutiple possible cases of inputs
+We see the input ```11``` produces a more Width in ouput waveform because there is a small delay in the design.This casusd the output High of input ```11``` to be of more width that compared to other inputs like ```00``` ,```01``` and ```10```.<br /> 
+![Screenshot from 2023-10-27 11-42-21](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/e16810a4-d899-4c6a-ad19-b6cc16681279)
+
+**If there was no delay in the design this,The waveform would look like the one below:** <br />
+
+![Screenshot from 2023-10-27 14-32-55](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/550a2b94-c2a5-460a-85d2-39143eb6cf12)
+(This Waveform just to illustrate,our design will have a delay for high output)
 
 ## Acknowledgement
 
