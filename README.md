@@ -264,6 +264,44 @@ We see the input ```11``` produces a more Width in ouput waveform because there 
 ![Screenshot from 2023-10-27 14-32-55](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/550a2b94-c2a5-460a-85d2-39143eb6cf12)
 (This Waveform just to illustrate,our design will have a delay for high output)
 
+
+## Instruction Verification
+
+We will consider the link : https://en.wikichip.org/wiki/risc-v/registers/ for refrence
+
+Some of the instructions in the above assembly code were tested in GTKWave and was verified.<br />
+
+### addi sp,sp,-48
+
+Here we will conside the assembly code line:<br />
+```10054:	fd010113          	addi	sp,sp,-48```  <br />
+
+The $signal$45 is the stack pointer and the value at the instuction ```fd010113``` is 000000CF which is 207.
+
+![Screenshot from 2023-10-27 15-01-45](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/6c0b4fd0-7504-499a-ae33-85ac4f3521c0)
+
+### li	a5,-5
+
+Here we will conside the assembly code line:<br />
+```10060:	ffb00793          	li	a5,-5``` <br />
+
+The $signal$58 is a5 register and the value at instruction ```ffb00793``` is FFFFFFFB which is -5.
+
+![Screenshot from 2023-10-27 15-06-07](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/794c62bb-936e-4cd7-bf68-afe40992d9c6)
+
+### addi	s0,sp,48
+
+
+```1005c:	03010413          	addi	s0,sp,48``` <br />
+This instruction comes after the ```addi sp,sp,-48``` and  ```sw s0,44(sp)``` instructions.<br />
+
+We can see for the instruction```03010413``` in the register s0 which is $signal$53 will be 000000FF which is 255.
+
+![addi_48](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/88b8a730-7e93-4fba-b0ee-084d6f2e22d8)
+
+
+
+
 ## Acknowledgement
 
 1. Kunal Ghosh, VSD Corp. Pvt. Ltd.
