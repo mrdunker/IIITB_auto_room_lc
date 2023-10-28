@@ -267,7 +267,9 @@ We see the input ```11``` produces a more Width in ouput waveform because there 
 
 ## Instruction Verification
 
-We will consider the link : https://en.wikichip.org/wiki/risc-v/registers/ for refrence
+We will consider the link : https://en.wikichip.org/wiki/risc-v/registers for reference<br />
+
+$signal$43, $signa$45, and $signal$58 are essentially registers. $signal$43 holds the hardwired wire zero registers (x0), $signal$45 stores the stack pointer (x2) register, and $signal$58 represents the a5 register.This can be infered from the above link.<br />
 
 Some of the instructions in the above assembly code were tested in GTKWave and was verified.<br />
 
