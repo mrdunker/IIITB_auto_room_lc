@@ -263,11 +263,6 @@ The below screenshot illustrates the change in instructions throughout.<br />
 We see the input ```11``` produces a more Width in ouput waveform because there is a small delay in the design.This casusd the output High of input ```11``` to be of more width that compared to other inputs like ```00``` ,```01``` and ```10```.<br /> 
 ![Screenshot from 2023-10-27 11-42-21](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/e16810a4-d899-4c6a-ad19-b6cc16681279)
 
-**If there was no delay in the design this,The waveform would look like the one below:** <br />
-
-![Screenshot from 2023-10-27 14-32-55](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/550a2b94-c2a5-460a-85d2-39143eb6cf12)
-(This Waveform just to illustrate,our design will have a delay for high output)
-
 
 ## Instruction Verification
 
@@ -306,7 +301,38 @@ We can see for the instruction```03010413``` in the register s0 which is $signal
 ![addi_48](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/88b8a730-7e93-4fba-b0ee-084d6f2e22d8)
 
 
+## Gate Level Synthesis
 
+Here we do Synthesis of our processor on yosys using the following commands:
+
+```
+read_liberty -lib sky130_fd_sc_hd__tt_025C_1v80_256.lib 
+read_verilog processor.v 
+synth -top wrapper
+dfflibmap -liberty sky130_fd_sc_hd__tt_025C_1v80_256.lib 
+abc -liberty sky130_fd_sc_hd__tt_025C_1v80_256.lib
+write_verilog <filename.v>
+
+```
+
+The following Command is used to run the synthesized netlist along with primitives.<br />
+
+```
+iverilog -o test testbench.v synth_processor_test.v sky130_sram_1kbyte_1rw1r_32x256_8.v sky130_fd_sc_hd.v primitives.v
+```
+
+The following waveforms are of GLS Simulation obtained using GTKWave and the same output is obtained as Functional Verification.<br />
+
+![Screenshot from 2023-10-30 23-48-52](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/0a667943-7878-4c82-b6b7-32a64bc0ebd5)
+
+![Screenshot from 2023-10-30 23-56-55](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/3cee3b94-90b0-43fa-a745-163290dd841b)
+
+The following screenshot is of the wrapper module using the following command in yosys
+
+```
+show wrapper
+```
+![Screenshot from 2023-10-31 00-07-07](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/b79a8e6d-b681-425e-a010-ac37665ceaa5)
 
 ## Acknowledgement
 
