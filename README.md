@@ -255,6 +255,10 @@ i.e if both the input pins be high the output will be high.The delay in the outp
 
 ![Screenshot from 2023-10-27 14-11-34](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/ae80f687-0bad-4ef8-be25-a1e8dd72dd60)
 
+The output is becoming high at ```fe042623``` as shown below.<br />
+
+![Screenshot from 2023-10-31 11-21-15](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/92181914-d999-4d55-b9aa-342f0ca57357)
+
 The below screenshot illustrates the change in instructions throughout.<br />
 ![image](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/e421e2c3-4772-48a5-af57-6ad54f7c4994)
 
@@ -262,6 +266,15 @@ The below screenshot illustrates the change in instructions throughout.<br />
 ### The below screenshots are of mutiple possible cases of inputs
 We see the input ```11``` produces a more Width in ouput waveform because there is a small delay in the design.This casusd the output High of input ```11``` to be of more width that compared to other inputs like ```00``` ,```01``` and ```10```.<br /> 
 ![Screenshot from 2023-10-27 11-42-21](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/e16810a4-d899-4c6a-ad19-b6cc16681279)
+
+The output is becoming high at ```fe042623``` as shown below.The This is the same instruction at different instances of which output becomes 1.<br />
+
+![Screenshot from 2023-10-31 11-18-40](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/5a0b44e9-9ae9-4802-bed8-f1abba7be76c)
+
+When the output is becoming low  the instruction is ```00FF6f33``` as shown below.<br />
+Here the input is ```01``` and hence will lead to a LOW output.<br />
+
+![Screenshot from 2023-10-31 11-16-25](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/19cbdc0b-fafd-486b-b283-b93865b7d17a)
 
 
 ## Instruction Verification
