@@ -490,9 +490,59 @@ run_cts
 
 ![Screenshot from 2023-11-13 12-17-21](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/375961c3-47d3-4939-9692-c82caf4ab5dc)
 
+## Power distribution
 
+The command ```gen_pdn``` is used to get the power distribution network.
 
+![Screenshot from 2023-11-13 12-18-54](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/98b53302-47aa-4474-a967-e4ab095a889e)
 
+## Routing
+
+Implements the interconnect system between standard cells using the remaining available metal layers after CTS and PDN generation. The routing is performed on routing grids to ensure minimal DRC errors.<br />
+
+OpenLANE uses the TritonRoute tool for routing. There are 2 stages of routing:<br />
+1. Global Routing
+2. Detailed Routing
+
+In Global Routing Routing region is divided into rectangle grids which are represented as course 3D routes (Fastroute tool).<br />
+In Detailed Finer grids and routing guides used to implement physical wiring (TritonRoute tool).<br />
+
+Run the following command to run the routing<br />
+
+```
+run_routing
+```
+After completion it should show the following messages.Here we see no DRC violations.<br />
+
+![Screenshot from 2023-11-13 13-40-10](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/cfb339b8-17e9-484c-a7f6-2c4ac9cb0b50)
+
+We can check the routed layout with magic with the following command.<br />
+
+```
+magic -T /home/emil/.volare/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.nom.lef def read wrapper.def &
+```
+
+![Screenshot from 2023-11-13 10-20-28](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/5b2878dd-8bc6-4132-b555-e62787edc4b8)
+
+![Screenshot from 2023-11-13 10-22-48](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/22980daf-f782-44d4-9507-5461f3237d23)
+
+![Screenshot from 2023-11-13 10-21-30](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/9b74b0e9-43e3-425b-ba7c-1d2fef61f3c9)
+
+### Post-Routing Timing Report
+
+![Screenshot from 2023-11-13 15-45-52](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/9bee6add-7a7f-4992-a902-b4a9b7b45cfc)
+
+### Post-Routing Area Report
+
+![Screenshot from 2023-11-13 15-46-10](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/1d93144f-b757-4421-9f7c-8380ee6d7ca9)
+
+### Post-Routing Power Report
+
+![Screenshot from 2023-11-13 15-46-59](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/a06b7c44-d415-4a04-a032-eadc89d9b627)
+
+### DRC Check Report
+
+![Screenshot from 2023-11-13 15-51-28](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/7e40ff5f-c094-47f7-8791-6644f803de64)
 
 
 
