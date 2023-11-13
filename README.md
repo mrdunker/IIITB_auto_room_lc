@@ -347,6 +347,123 @@ show wrapper
 ```
 ![Screenshot from 2023-10-31 00-07-07](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/b79a8e6d-b681-425e-a010-ac37665ceaa5)
 
+
+# Physical Design
+
+Place and Route (PnR) is the core of any ASIC implementation and Openlane flow integrates into it several key open source tools which perform each of the respective stages of PnR. Below are the stages and the respective tools that are called by openlane for the functionalities as described:<br />
+
+![Screenshot from 2023-11-13 16-44-36](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/79a6e0fc-976b-4523-bf4c-5133c770230e)
+
+
+- Synthesis
+  - Generating gate-level netlist
+  -  Performing cell mapping
+  -   Performing pre-layout STA
+- Floorplaning
+  - Defining the core area for the macro as well as the cell sites and the tracks
+  - Placing the macro input and output ports
+  - Generating the power distribution network
+- Placement
+  - Performing global placemen
+  - Perfroming detailed placement to legalize the globally placed components
+- Clock Tree Synthesis
+  - Synthesizing the clock tree
+- Routing
+  - Performing global routing to generate a guide file for the detailed router
+  - Performing detailed routing
+- GDSII
+  - Streaming out the final GDSII layout file from the routed def
+ 
+## Preparing The Design
+
+Preparing the design and including the lef files: The commands to prepare the design and overwite in a existing run folder the reports and results along with the command to include the lef files is given below:
+<br />
+``` sed -i's/max_transition   :0.04/max_transition   :0.75'*/*.lib```
+
+```
+make mount
+%./flow.tcl -interactive
+% package require openlane 0.9
+% prep -design project
+
+```
+
+![Screenshot from 2023-11-13 12-03-01](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/d775bdfe-dfcd-45f6-bca4-f6987fc5f3e5)
+
+
+## Synthesis
+
+Logic synthesis uses the RTL netlist to perform HDL technology mapping. The synthesis process is normally performed in two major steps: <br />
+
+1. GTECH Mapping – Consists of mapping the HDL netlist to generic gates what are used to perform logical optimization based on AIGERs and other topologies created from the generic mapped netlist.
+2. Technology Mapping – Consists of mapping the post-optimized GTECH netlist to standard cells described in the PDK.
+
+To synthesize the code run the following command.<br />
+
+```
+run_synthesis
+```
+![Screenshot from 2023-11-13 12-04-11](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/04a3bd31-84d6-41a5-896a-329ec4497358)
+
+Synthesis report:<br />
+
+![Screenshot from 2023-11-13 17-01-50](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/47a7fbd8-1141-47a5-ad84-8dc3158ffedf)
+
+
+## Floorplan
+
+Goal is to plan the silicon area and create a robust power distribution network (PDN) to power each of the individual components of the synthesized netlist. In addition, macro placement and blockages must be defined before placement occurs to ensure a legalized GDS file. In power planning we create the ring which is connected to the pads which brings power around the edges of the chip. We also include power straps to bring power to the middle of the chip using higher metal layers which reduces IR drop and electro-migration problem.<br />
+
+Following command helps to run floorplan:<br />
+
+``` run_floorplan ```
+
+![Screenshot from 2023-11-13 12-04-33](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/ac43bcce-3ce5-40bd-a479-8f2cf9a04023)
+
+We can check the layout with magic with the following command.<br />
+
+```
+magic -T /home/emil/.volare/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.nom.lef def read wrapper.def &
+```
+
+![Screenshot from 2023-11-13 12-05-32](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/073c9b0b-d217-4dba-94bf-ff4c05730f8e)
+
+### Die Area (post floorplan)
+
+![Screenshot from 2023-11-13 12-11-08](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/c5f659df-e71b-4d00-8713-cd43d7ee762a)
+
+### Core Area (post floorplan)
+
+![Screenshot from 2023-11-13 12-10-40](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/6436934e-a94b-4e65-a187-024ff7284056)
+
+
+## Placement
+
+Place the standard cells on the floorplane rows, aligned with sites defined in the technology lef file. Placement is done in two steps: Global and Detailed. In Global placement tries to find optimal position for all cells but they may be overlapping and not aligned to rows, detailed placement takes the global placement and legalizes all of the placements trying to adhere to what the global placement wants. The next step in the OpenLANE ASIC flow is placement. The synthesized netlist is to be placed on the floorplan. Placement is perfomed in 2 stages:<br />
+
+1. Global Placement
+2. Detailed Placement
+
+run the following command to run the placement:<br />
+
+```
+run_placement
+```
+
+![Screenshot from 2023-11-13 12-12-28](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/e3d7f006-8ce5-4a58-932b-b82ba12d527d)
+
+Now after placement we can see the layout in the placement directory. We view it with magic.<br />
+We can check the layout with magic with the following command.<br />
+
+```
+magic -T /home/emil/.volare/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.nom.lef def read wrapper.def &
+```
+
+![Screenshot from 2023-11-13 12-12-29](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/6fa8c424-fa86-4754-9997-d769773e5242)
+
+
+
+
 ## Acknowledgement
 
 1. Kunal Ghosh,Co-founder,VSD Corp. Pvt. Ltd.
