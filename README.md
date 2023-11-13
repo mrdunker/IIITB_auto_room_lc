@@ -544,7 +544,45 @@ magic -T /home/emil/.volare/sky130A/libs.tech/magic/sky130A.tech lef read ../../
 
 ![Screenshot from 2023-11-13 15-51-28](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/7e40ff5f-c094-47f7-8791-6644f803de64)
 
+## Power Calculation
 
+Given a Clock period of 25ns in Json file , setup slack we got after routing is 5.59ns.<br />
+
+```
+				1
+Max Performance =  ------------------------
+                     clock period - slack(setup)
+```
+
+```
+Max Performance = 0.0515198 Ghz
+
+```
+
+## Signoff
+
+Following commands are run post routing with no DRC violations
+
+```
+run_magic
+run_magic_spice_export
+run_magic_drc
+run_antenna_check
+
+```
+
+![Screenshot from 2023-11-13 14-02-28](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/0b89ae19-6589-4dcd-8bdc-59eb5745f2e3)
+
+## Non-Interactive flow
+
+Run the following commands to do the non-interactive flow.<br />
+
+```
+cd Desktop/OpenLane 
+make mount
+./flow.tcl -design project
+
+```
 
 ## Acknowledgement
 
@@ -558,4 +596,6 @@ magic -T /home/emil/.volare/sky130A/libs.tech/magic/sky130A.tech lef read ../../
 
 1. https://github.com/SakethGajawada/RISCV-GNU
 2. https://github.com/kunalg123
+3. https://github.com/The-OpenROAD-Project/OpenLane
+4. https://openlane.readthedocs.io/en/latest/
 
