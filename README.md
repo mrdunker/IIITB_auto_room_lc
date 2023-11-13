@@ -461,6 +461,38 @@ magic -T /home/emil/.volare/sky130A/libs.tech/magic/sky130A.tech lef read ../../
 
 ![Screenshot from 2023-11-13 12-12-29](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/6fa8c424-fa86-4754-9997-d769773e5242)
 
+## Clock Tree Synthesis
+
+Clock tree synteshsis is used to create the clock distribution network that is used to deliver the clock to all sequential elements. The main goal is to create a network with minimal skew across the chip. H-trees are a common network topology that is used to achieve this goal.<br />
+
+The purpose of building a clock tree is enable the clock input to reach every element and to ensure a zero clock skew. H-tree is a common methodology followed in CTS.<br />
+Following command is used to run CTS.<br />
+
+```
+run_cts
+```
+
+![Screenshot from 2023-11-13 12-13-47](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/7074a451-cc58-42f7-bf1c-7de42f521b61)
+
+### Timing Report
+
+![Screenshot from 2023-11-13 12-15-50](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/97f5c45e-fd9a-45ef-9909-09dff5e24826)
+
+### Area Report
+
+![Screenshot from 2023-11-13 12-16-30](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/6326d3ee-eae5-4c34-83c8-4b7d356153be)
+
+### Skew Report
+
+![Screenshot from 2023-11-13 12-17-09](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/8d1f3b81-3662-425f-aca2-ee1f1fab3587)
+
+### Power Report
+
+![Screenshot from 2023-11-13 12-17-21](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/375961c3-47d3-4939-9692-c82caf4ab5dc)
+
+
+
+
 
 
 
