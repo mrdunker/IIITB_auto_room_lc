@@ -587,8 +587,8 @@ make mount
 ## Acknowledgement
 
 1. Kunal Ghosh,Co-founder,VSD Corp. Pvt. Ltd.
-2. Sumanto Kar,VSD Corp.
-3. Mayank Kabra,Founder, Chipcron Pvt. Ltd.
+2. Mayank Kabra,Founder, Chipcron Pvt. Ltd.
+3. Sumanto Kar,VSD Corp.
 4. Alwin Shaju, Colleague, IIIT-Bangalore
 5. Kanish R, Colleague, IIIT-Bangalore
 
