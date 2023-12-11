@@ -544,7 +544,7 @@ magic -T /home/emil/.volare/sky130A/libs.tech/magic/sky130A.tech lef read ../../
 
 ![Screenshot from 2023-11-13 15-51-28](https://github.com/mrdunker/IIITB_auto_room_lc/assets/38190245/7e40ff5f-c094-47f7-8791-6644f803de64)
 
-## Power Calculation
+## Performance Calculation
 
 Given a Clock period of 25ns in Json file , setup slack we got after routing is 5.59ns.<br />
 
@@ -555,7 +555,7 @@ Max Performance =  ------------------------
 ```
 
 ```
-Max Performance = 0.0515198 Ghz
+Max Performance = 51.5198 MHz
 
 ```
 
