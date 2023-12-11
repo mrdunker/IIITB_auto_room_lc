@@ -2,6 +2,7 @@
 
 This Repository summarizes the work progress made in The RISC-V-based project.
 <br />
+A tool developed by Chipcron Private Ltd has been used to converted the design C file to a netlist(processor.v) file.<br />
 
 ## Motive
 
