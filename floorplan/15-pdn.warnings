@@ -1,0 +1,7 @@
+[WARNING STA-0060] /openlane/designs/project/src/sky130_fd_sc_hd__tt_025C_1v80.lib line 1, default_operating_condition OC not found.
+[WARNING PDN-0231] data_mem is not connected to any power/ground nets.
+[WARNING PDN-0231] inst_mem is not connected to any power/ground nets.
+[WARNING PDN-0189] Supply pin vccd1 of instance data_mem is not connected to any net.
+[WARNING PDN-0189] Supply pin vssd1 of instance data_mem is not connected to any net.
+[WARNING PDN-0189] Supply pin vccd1 of instance inst_mem is not connected to any net.
+[WARNING PDN-0189] Supply pin vssd1 of instance inst_mem is not connected to any net.

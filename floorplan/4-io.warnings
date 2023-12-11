@@ -1,0 +1,3 @@
+[WARNING STA-0060] /openlane/designs/project/src/sky130_fd_sc_hd__tt_025C_1v80.lib line 1, default_operating_condition OC not found.
+[WARNING PPL-0015] Macro data_mem is not placed.
+[WARNING PPL-0015] Macro inst_mem is not placed.

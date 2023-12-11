@@ -1,0 +1,22 @@
+OpenROAD 0a6d0fd469bc674417036342994520ee2e0a2727 
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[INFO ODB-0222] Reading LEF file: /openlane/designs/project/runs/RUN_2023.11.12_07.32.24/tmp/merged.nom.lef
+[INFO ODB-0223]     Created 13 technology layers
+[INFO ODB-0224]     Created 25 technology vias
+[INFO ODB-0225]     Created 443 library cells
+[INFO ODB-0226] Finished LEF file:  /openlane/designs/project/runs/RUN_2023.11.12_07.32.24/tmp/merged.nom.lef
+[INFO ODB-0127] Reading DEF file: /openlane/designs/project/runs/RUN_2023.11.12_07.32.24/results/routing/wrapper.def
+[INFO ODB-0128] Design: wrapper
+[INFO ODB-0094] 		Created 100000 Insts
+[INFO ODB-0130]     Created 27 pins.
+[INFO ODB-0131]     Created 167278 components and 698000 component-terminals.
+[INFO ODB-0132]     Created 6 special nets and 631970 connections.
+[INFO ODB-0133]     Created 17068 nets and 65987 connections.
+[INFO ODB-0134] Finished DEF file: /openlane/designs/project/runs/RUN_2023.11.12_07.32.24/results/routing/wrapper.def
+Top-level design name: wrapper
+Found default power net 'vccd1'
+Found default ground net 'vssd1'
+Found 3 power ports.
+Found 3 ground ports.
+Modified power connections of 167278/167278 cells.

@@ -1,0 +1,9 @@
+OpenROAD 0a6d0fd469bc674417036342994520ee2e0a2727 
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+Placing the following macros:
+{'inst_mem': ['125000', '125000', 'N'], 'data_mem': ['125000', '695000', 'S']}
+Design name: wrapper
+Placing data_mem
+Placing inst_mem
+Successfully placed 2 instances.

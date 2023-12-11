@@ -1,0 +1,4 @@
+[WARNING STA-0060] /openlane/designs/project/src/sky130_fd_sc_hd__tt_025C_1v80.lib line 1, default_operating_condition OC not found.
+Warning: There are 2 unclocked register/latch pins.
+Warning: There are 23 unconstrained endpoints.
+[WARNING] Did not save OpenROAD database!
